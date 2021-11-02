@@ -1,0 +1,96 @@
+@import '~antd/es/style/themes/default.less';
+.primaryColor{
+  color:#1B90FF
+}
+.primaryBg{
+background:#1B90FF
+}
+.qm-padding-null{padding:0 !important}
+.qm-table-icon{font-size:16px}
+#trans-tooltip,
+#tip-arrow-bottom,
+#tip-arrow-top {
+display: none;
+}
+html,
+body,
+#root {
+  height: 100%;
+}
+
+.colorWeak {
+  filter: invert(80%);
+}
+
+.ant-layout {
+  min-height: 100vh;
+}
+.ant-pro-global-header{
+  position: fixed;
+  height:48px;
+  z-index: 4000;
+  text-align: right;
+  padding:0;
+  left: 0;
+  top: 0;
+  box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
+}
+.ant-pro-global-header-collapsed-button{
+  z-index: 22100000;
+  position: absolute;
+}
+.qm-fixed-header{
+  position: fixed;
+  box-shadow: 0 1px 4px rgb(0 21 41 / 8%);
+}
+canvas {
+  display: block;
+}
+
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+@media (max-width: @screen-xs) {
+  .ant-table {
+    width: 100%;
+    overflow-x: auto;
+    &-thead > tr,
+    &-tbody > tr {
+      > th,
+      > td {
+        white-space: pre;
+        > span {
+          display: block;
+        }
+      }
+    }
+  }
+}
+
+// 兼容IE11
+@media screen and(-ms-high-contrast: active), (-ms-high-contrast: none) {
+  body .ant-design-pro > .ant-layout {
+    min-height: 100vh;
+  }
+}
+
+.ant-page-header {
+  &.has-breadcrumb {
+    &.ant-page-header-ghost{
+      position: fixed;
+      top: 0;
+      z-index: 300;
+      height: 48px;
+      margin-left:48px;
+      padding:12px 0;
+    }
+  }
+}
