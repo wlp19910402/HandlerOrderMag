@@ -18,9 +18,9 @@ const BlankLayoutCmp: React.FC<BlankLayout> = ({ children, dispatch, token }) =>
       dispatch({
         type: 'user/fetchCurrent',
         callback: (res: boolean) => {
-          res && dispatch({
-            type: 'menu/fetctCurrentMenu'
-          })
+          // res && dispatch({
+          //   type: 'menu/fetctCurrentMenu'
+          // })
           // !res && dispatch({
           //   type: 'user/logout'
           // })

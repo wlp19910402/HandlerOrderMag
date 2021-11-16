@@ -19,31 +19,35 @@ export default defineConfig({
   dva: {
     hmr: true,
   },
+  // // 只需要 dev，这么配
+  // mfsu: {},
+  // // 如果需要针对生产环境生效，这么配
+  // // mfsu: { production: { output: '.mfsu-production' } },
   history: {
     type: "hash",
   },
-  chunks: ['vendors', 'umi'],
-  chainWebpack: function (config, { webpack }) {
-    config.merge({
-      optimization: {
-        splitChunks: {
-          chunks: 'all',
-          minSize: 30000,
-          minChunks: 3,
-          automaticNameDelimiter: '.',
-          cacheGroups: {
-            vendor: {
-              name: 'vendors',
-              test({ resource }) {
-                return /[\\/]node_modules[\\/]/.test(resource);
-              },
-              priority: 10,
-            },
-          },
-        },
-      },
-    });
-  },
+  // chunks: [ 'vendors', 'umi' ],
+  // chainWebpack: function (config, { webpack }) {
+  //   config.merge({
+  //     optimization: {
+  //       splitChunks: {
+  //         chunks: 'all',
+  //         minSize: 30000,
+  //         minChunks: 3,
+  //         automaticNameDelimiter: '.',
+  //         cacheGroups: {
+  //           vendor: {
+  //             name: 'vendors',
+  //             test ({ resource }) {
+  //               return /[\\/]node_modules[\\/]/.test(resource);
+  //             },
+  //             priority: 10,
+  //           },
+  //         },
+  //       },
+  //     },
+  //   });
+  // },
   locale: {
     default: 'zh-CN',
     antd: true,
@@ -74,4 +78,7 @@ export default defineConfig({
     babelPlugins: [],
     babelOptions: {},
   },
+  mfsu: {},
+  webpack5: {},
+  // exportStatic: {},
 });

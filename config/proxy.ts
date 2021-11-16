@@ -17,20 +17,11 @@ export default {
       target: "https://liyunboji-pub.oss-cn-beijing.aliyuncs.com",
       changeOrigin: true,
       pathRewrite: { '^/uploadAliyuncs': '' },
+    },
+    '/handler/': {
+      target: 'http://192.168.16.103:8888/',
+      changeOrigin: true,
+      pathRewrite: { '^/handler/': '/' },
     }
-  },
-  // test: {
-  //   '/api/': {
-  //     target: 'https://preview.pro.ant.design',
-  //     changeOrigin: true,
-  //     pathRewrite: { '^': '' },
-  //   },
-  // },
-  // pre: {
-  //   '/api/': {
-  //     target: 'your pre url',
-  //     changeOrigin: true,
-  //     pathRewrite: { '^': '' },
-  //   },
-  // },
+  }
 };

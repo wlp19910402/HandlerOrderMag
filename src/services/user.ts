@@ -5,11 +5,16 @@ import localforage from 'localforage'
 export type LoginParamsType = {
   username: string;
   password: string;
-  code: string;
+  imageCode: string;
 }
 // 登录
 export async function fakeAccountLogin (params: LoginParamsType) {
-  return httpServer.post(API.USER_LOGIN, { data: params })
+  let formData = new FormData();
+  formData.set("username", params.username);
+  formData.set("password", params.password);
+  formData.set("imageCode", params.imageCode);
+  return httpServer.post(API.HANDLER_ORDER_MAG, { data: formData })
+  // return httpServer.post(API.USER_LOGIN, { data: params })
 }
 // 根据token刷新token值
 export async function fackAccountToken () {

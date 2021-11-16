@@ -1,7 +1,11 @@
 export default {
+  HANDLER_ORDER_MAG: '/handler/login',
+  HANDLER_ORDER_CODE: '/handler/code/image/base64',
+  USER_CURRENT: '/handler/sys/current/user/info',
   // 用户管理接口
-  USER_LOGIN: '/api/sys/login',
-  USER_CURRENT: "/api/user/current",
+  // USER_LOGIN: '/api/sys/login',
+  // USER_CURRENT: "/api/user/current",
+
   USER_LOGOUT: "/api/sys/logout",
   USER_AUTHORITY: '/api/user/authorization',
   USER_LIST: '/api/user/list',
