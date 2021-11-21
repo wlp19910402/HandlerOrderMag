@@ -7,7 +7,7 @@ const localMenuList = [
     id: 17,
     parentId: 0,
     name: '系统管理',
-    url: '#',
+    url: '/admin',
     code: 'sys:manage',
     seq: 1,
     icon: 'icon-2jichumokuai',
@@ -21,7 +21,7 @@ const localMenuList = [
         children: [],
         icon: 'fa fa-users',
         type: 1,
-        url: '/user/list',
+        url: '/admin/user',
         code: 'sys:user',
       },
       {
