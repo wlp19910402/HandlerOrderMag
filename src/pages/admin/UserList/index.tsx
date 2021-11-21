@@ -40,9 +40,11 @@ const ResumeList: React.FC<UserListDataType> = () => {
       title: '手机号',
       dataIndex: 'mobile',
       // hideInSearch: true,
+      width: 120,
       tip: '规则名称是唯一的 key',
       valueType: 'textarea',
       key: 'mobile',
+      fixed: 'left',
       render: (val, entity) => {
         return (
           <a
@@ -65,6 +67,8 @@ const ResumeList: React.FC<UserListDataType> = () => {
       title: '性别',
       dataIndex: 'gender',
       hideInSearch: true,
+      width: 60,
+      align: 'center',
       key: 'gender',
       valueEnum: {
         // ...searchBindFlag,
@@ -81,6 +85,7 @@ const ResumeList: React.FC<UserListDataType> = () => {
     {
       title: '实名认证',
       key: 'accountAuth',
+      width: 100,
       hideInSearch: true,
       dataIndex: 'accountAuth',
       valueEnum: {
@@ -141,6 +146,7 @@ const ResumeList: React.FC<UserListDataType> = () => {
       valueType: 'option',
       key: 'option',
       width: '140px',
+      fixed: 'right',
       render: (_, record) =>
         record.superAdmin === 0 ? (
           []
@@ -250,10 +256,11 @@ const ResumeList: React.FC<UserListDataType> = () => {
     <PageContainer header={{ title: '' }}>
       <ProTable
         bordered={true}
-        scroll={{ x: true }}
+        // scroll={{ x: true }}
         //    & {
         //     scrollToFirstRowOnChange?: boolean;
         // };
+        scroll={{ x: 800 }}
         size="small"
         headerTitle="查询表格"
         actionRef={actionRef}
@@ -324,9 +331,10 @@ const ResumeList: React.FC<UserListDataType> = () => {
         }}
         closable={false}
       >
-        {currentRow?.username && (
+        {currentRow?.mobile && (
           <ProDescriptions<UserListDataType>
-            column={1}
+            column={2}
+            bordered={true}
             title={currentRow?.username}
             key={currentRow?.id}
             request={async () => ({
