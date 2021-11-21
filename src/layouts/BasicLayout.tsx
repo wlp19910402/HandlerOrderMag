@@ -23,6 +23,7 @@ import { getMatchMenu } from '@umijs/route-utils';
 import type { MenuDataType } from '@/pages/admin/Menu/data.d'
 import { IconFont } from '@/components/common/IconFont'
 
+
 const noMatch = (
   <Result
     status={403}
@@ -113,8 +114,11 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
           // siderWidth={1200}
           menuDataRender={() => menuDataRender(currentMenu)}
           logo={'logo.png'}
+          fixSiderbar
+          // headerRender={true}
           {...props}
           {...settings}
+          // title={'dddd'}
           onCollapse={handleMenuCollapse}
           onMenuHeaderClick={() => history.push('/')}
           menuItemRender={(menuItemProps, defaultDom) => {
