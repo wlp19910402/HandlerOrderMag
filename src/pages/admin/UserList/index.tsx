@@ -71,7 +71,6 @@ const ResumeList: React.FC<UserListDataType> = () => {
       align: 'center',
       key: 'gender',
       valueEnum: {
-        // ...searchBindFlag,
         0: { text: '男' },
         1: { text: '女' },
       },
