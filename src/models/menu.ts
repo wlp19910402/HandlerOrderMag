@@ -32,7 +32,7 @@ const localMenuList = [
         children: [],
         icon: 'fa fa-user-secret',
         type: 1,
-        url: '/role/list',
+        url: '/admin/role',
         code: 'sys:role',
       },
       {
@@ -118,7 +118,7 @@ const Model: MenuModelType = {
   state: defaulState,
   effects: {
     // 获取菜单列表
-    *fetchMenuTree({ callback }, { call, put }) {
+    *fetchMenuTree ({ callback }, { call, put }) {
       const response = yield call(queryMenuTree);
       if (!response) return;
       yield put({
@@ -142,23 +142,23 @@ const Model: MenuModelType = {
       if (callback) callback(menuData, flatMenuData);
     },
     // 保存菜单
-    *saveMenu({ payload, callback }, { call }) {
+    *saveMenu ({ payload, callback }, { call }) {
       const response = yield call(saveMenu, payload);
       if (!response) return;
       if (callback) callback(response);
       message.success('保存成功！');
     },
-    *delMenu({ payload, callback }, { call }) {
+    *delMenu ({ payload, callback }, { call }) {
       const response = yield call(fetchDelMenu, payload);
       if (!response) return;
       if (callback) callback(response);
       message.success('删除成功！');
     },
     // 当前用户菜单
-    *fetctCurrentMenu(_, { put, call }) {
+    *fetctCurrentMenu (_, { put, call }) {
       yield put({
         type: 'changeCurrentMenu',
-        payload: [welcome, ...localMenuList],
+        payload: [ welcome, ...localMenuList ],
       });
       // const response = yield call(queryCurrentMenu);
       // if (!response) {
@@ -174,7 +174,7 @@ const Model: MenuModelType = {
       //   payload: [welcome, ...menuData],
       // });
     },
-    *clearMenu(_, { put }) {
+    *clearMenu (_, { put }) {
       yield put({
         type: 'changeCurrentMenu',
         payload: [],
@@ -186,13 +186,13 @@ const Model: MenuModelType = {
     },
   },
   reducers: {
-    changeCurrentMenu(state = defaulState, { payload }) {
+    changeCurrentMenu (state = defaulState, { payload }) {
       return {
         ...state,
         currentMenu: payload,
       };
     },
-    changeMenuTree(state = defaulState, { payload }) {
+    changeMenuTree (state = defaulState, { payload }) {
       return {
         ...state,
         menuTree: payload,

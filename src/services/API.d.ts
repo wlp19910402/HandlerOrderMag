@@ -10,6 +10,11 @@ export default {
   USER_BIND_ROLE_EDIT: '/handler/sys/user/role/edit',
   USER_ADD: '/handler/sys/user/saveOrUpdate',
   USER_DELETE: '/handler/sys/user/cancel/', /// user/del/{id}
+  CUR_USER_SITE_LIST: '/handler/site/user/site/list',//当前用户的网点
+
+  ROLE_EDIT: '/handler/sys/role/edit',//角色编辑
+  ROLE_CREATE: '/handler/sys/role/add',//角色创建
+
   // 用户管理接口
   // USER_LOGIN: '/api/sys/login',
   // USER_CURRENT: "/api/user/current",
@@ -25,7 +30,7 @@ export default {
   USER_EDIT_PWD: '/api/user/edit-pwd', //修改密码
   // 角色管理接口
   // ROLE_USERID_CHECKID: '/api/sys/role/list', // 角色列表标记指定用户拥有的权限/sys/role/list/{userId}
-  ROLE_SAVE: '/api/sys/role/save',
+
   ROLE_BIND: '/api/sys/role/bind',
   ROLE_GET_MENU: '/api/sys/role/menu', // 绑定权限回显/sys/role/menu/{id}
   ROLE_INFO: '/api/sys/role/detail', /// sys/role/detail/{id}

@@ -32,12 +32,9 @@ export type UserSearchType = {
   dataStatus?: number;
 } & PageDataType;
 export type EditUserDataType = {
-  // email: string;
   mobile: string;
-  // password?: string;
-  // realname: string;
   roleIds: number[];
-  // username?: string;
+  siteList: number[];
   id?: number;
 };
 

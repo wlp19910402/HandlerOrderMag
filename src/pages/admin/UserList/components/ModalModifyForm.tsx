@@ -6,7 +6,7 @@ import type { ActionType } from '@ant-design/pro-table';
 import { ModalForm, ProFormText, ProFormCheckbox } from '@ant-design/pro-form';
 import { addUser, editUser } from '../service';
 import type { UserListDataType, EditUserDataType } from '../../data.d';
-import type { RoleCheckBoxDataType } from '../index';
+import type { RoleCheckBoxDataType, SiteCheckBoxDataType } from '../index';
 import { message } from 'antd';
 
 type ModalModifyFormDataProps = {
@@ -15,6 +15,7 @@ type ModalModifyFormDataProps = {
   actionRef: React.MutableRefObject<ActionType | undefined>;
   currentRow: UserListDataType | undefined;
   roleData: RoleCheckBoxDataType[] | undefined;
+  siteData: SiteCheckBoxDataType[] | undefined;
   initialRoleIds: number[] | undefined;
   setShowDetail: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -25,6 +26,7 @@ const ModalModifyForm: React.FC<ModalModifyFormDataProps> = (props) => {
     actionRef,
     currentRow,
     roleData,
+    siteData,
     initialRoleIds = undefined,
     setShowDetail,
   } = props;
@@ -43,26 +45,23 @@ const ModalModifyForm: React.FC<ModalModifyFormDataProps> = (props) => {
   };
   return (
     <ModalForm
-      modalProps={{
+      modalProps={ {
         maskClosable: false,
         okText: '邀请',
-      }}
-      title={currentRow?.id !== undefined ? '用户编辑' : '邀请人员'}
+      } }
+      title={ currentRow?.id !== undefined ? '用户编辑' : '邀请人员' }
       width="400px"
-      visible={createModalVisible}
-      onVisibleChange={handleModalVisible}
-      onFinish={async (value) => {
+      visible={ createModalVisible }
+      onVisibleChange={ handleModalVisible }
+      onFinish={ async (value) => {
         const bodyVaule: EditUserDataType = {
-          // username: value.username,
-          // email: value.email,
           mobile: value.mobile,
-          // realname: value.realname,
           roleIds: value.roleIds,
-          // password: value.password,
+          siteList: value.siteIds
         };
         await submitForm(bodyVaule);
-      }}
-      labelCol={{ span: 5 }}
+      } }
+      labelCol={ { span: 5 } }
       layout="horizontal"
     >
       {/* <ProFormText
@@ -104,14 +103,14 @@ const ModalModifyForm: React.FC<ModalModifyFormDataProps> = (props) => {
         />
       )} */}
       <ProFormText
-        rules={[
+        rules={ [
           { required: true, message: '请输入手机号！' },
           { pattern: /^1\d{10}$/, message: '请输入正确的手机号' },
-        ]}
+        ] }
         label="手机号"
         name="mobile"
         placeholder="请输入手机号"
-        initialValue={currentRow?.mobile}
+        initialValue={ currentRow?.mobile }
       />
       {/* <ProFormText
         rules={[
@@ -125,17 +124,29 @@ const ModalModifyForm: React.FC<ModalModifyFormDataProps> = (props) => {
         placeholder="请输入邮箱"
         initialValue={currentRow?.email}
       /> */}
-      {roleData && roleData.length > 0 && (
+      { roleData && roleData.length > 0 && (
         <ProFormCheckbox.Group
-          name={currentRow?.id !== undefined ? 'oldRoleIds' : 'roleIds'}
+          name={ currentRow?.id !== undefined ? 'oldRoleIds' : 'roleIds' }
           layout="horizontal"
           label="角色"
-          options={roleData}
-          disabled={currentRow?.id !== undefined}
-          initialValue={initialRoleIds}
-          rules={[{ required: true, message: '必填项哦' }]}
+          options={ roleData }
+          disabled={ currentRow?.id !== undefined }
+          initialValue={ initialRoleIds }
+          rules={ [ { required: true, message: '必填项哦' } ] }
         />
-      )}
+      ) }
+      { siteData && siteData.length > 0 && (
+        <ProFormCheckbox.Group
+          name={ currentRow?.id !== undefined ? 'oldSiteIds' : 'siteIds' }
+          layout="horizontal"
+          label="网点"
+          options={ siteData }
+          disabled={ currentRow?.id !== undefined }
+          initialValue={ initialRoleIds }
+          rules={ [ { required: true, message: '必填项哦' } ] }
+        />
+      ) }
+
     </ModalForm>
   );
 };

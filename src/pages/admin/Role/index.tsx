@@ -40,9 +40,9 @@ const RoleList: React.FC<RoleDataType> = () => {
   const columns: ProColumns<any>[] | undefined = [
     {
       title: "角色名称",
-      dataIndex: 'roleName',
+      dataIndex: 'name',
       tip: '规则名称是唯一的 key',
-      key: 'id',
+      key: 'name',
       render: (val, entity) => {
         return (
           <a
@@ -51,20 +51,15 @@ const RoleList: React.FC<RoleDataType> = () => {
               setShowDetail(true);
             } }
           >
-            {`${val}` }
+            { `${val}` }
           </a>
         );
       },
     },
     {
-      title: "部门ID",
-      dataIndex: 'deptId',
-    },
-    {
       title: "备注",
       dataIndex: 'remark',
       hideInForm: true,
-      hideInTable: true
     },
     {
       title: "操作",
@@ -167,7 +162,7 @@ const RoleList: React.FC<RoleDataType> = () => {
             } }>
             <Button>
               批量删除
-          </Button>
+            </Button>
           </Popconfirm>
         </FooterToolbar>
       ) }

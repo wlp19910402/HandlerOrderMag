@@ -16,7 +16,7 @@ import ProDescriptions from '@ant-design/pro-descriptions';
 import { queryUserList, deleteUser, statusUser, getUserRoleId } from './service';
 import type { UserListDataType, searchBindFlag } from '../data.d';
 import ModalModifyForm from './components/ModalModifyForm';
-import { queryRoleList } from '@/pages/admin/Role/service';
+import { queryRoleList, queryCurUserSiteList } from '@/pages/admin/Role/service';
 import ModalAuthifyForm from './components/ModalAuthifyForm';
 import ModalModifyPasswordForm from './components/ModalModifyPasswordForm';
 const { Option } = Select;
@@ -24,17 +24,21 @@ export type RoleCheckBoxDataType = {
   label: string;
   value: number;
 };
-
+export type SiteCheckBoxDataType = {
+  label: string;
+  value: number;
+};
 const ResumeList: React.FC<UserListDataType> = () => {
-  const [showDetail, setShowDetail] = useState<boolean>(false);
+  const [ showDetail, setShowDetail ] = useState<boolean>(false);
   const actionRef = useRef<ActionType>();
-  const [currentRow, setCurrentRow] = useState<UserListDataType>();
-  const [selectedRowsState, setSelectedRows] = useState<UserListDataType[]>([]);
-  const [createModalVisible, handleModalVisible] = useState<boolean>(false);
-  const [createModalPasswordVisible, handleModalPasswordVisible] = useState<boolean>(false);
-  const [modalAuthifyVisible, handleModalAuthifyVisible] = useState<boolean>(false);
-  const [roleData, setRoleData] = useState<RoleCheckBoxDataType[] | undefined>();
-  const [initialRoleIds, setInitialRoleIds] = useState<number[] | undefined>(undefined);
+  const [ currentRow, setCurrentRow ] = useState<UserListDataType>();
+  const [ selectedRowsState, setSelectedRows ] = useState<UserListDataType[]>([]);
+  const [ createModalVisible, handleModalVisible ] = useState<boolean>(false);
+  const [ createModalPasswordVisible, handleModalPasswordVisible ] = useState<boolean>(false);
+  const [ modalAuthifyVisible, handleModalAuthifyVisible ] = useState<boolean>(false);
+  const [ roleData, setRoleData ] = useState<RoleCheckBoxDataType[] | undefined>();
+  const [ siteData, setSiteData ] = useState<SiteCheckBoxDataType[] | undefined>();
+  const [ initialRoleIds, setInitialRoleIds ] = useState<number[] | undefined>(undefined);
   const columns: ProColumns<any>[] = [
     {
       title: '手机号',
@@ -48,12 +52,12 @@ const ResumeList: React.FC<UserListDataType> = () => {
       render: (val, entity) => {
         return (
           <a
-            onClick={() => {
+            onClick={ () => {
               setCurrentRow(entity);
               setShowDetail(true);
-            }}
+            } }
           >
-            {`${val}`}
+            { `${val}` }
           </a>
         );
       },
@@ -100,12 +104,12 @@ const ResumeList: React.FC<UserListDataType> = () => {
       render: (val, record) => {
         return (
           <div>
-            {Array.isArray(val) &&
+            { Array.isArray(val) &&
               val.map((item, index) => (
-                <Tag key={index} color="blue">
-                  {item.name}
+                <Tag key={ index } color="blue">
+                  { item.name }
                 </Tag>
-              ))}
+              )) }
           </div>
         );
       },
@@ -113,7 +117,7 @@ const ResumeList: React.FC<UserListDataType> = () => {
         if (type === 'form') {
           return null;
         }
-        return <Select options={roleData} key="label" />;
+        return <Select options={ roleData } key="label" />;
       },
     },
     {
@@ -151,38 +155,38 @@ const ResumeList: React.FC<UserListDataType> = () => {
           []
         ) : (
           <>
-            {record.dataStatus == 2 && (
+            { record.dataStatus == 2 && (
               <Popconfirm
                 title="是否取消邀请？"
-                onConfirm={() => {
+                onConfirm={ () => {
                   record.id !== undefined && tiggerDeleteUser(record.id?.toString());
-                }}
+                } }
               >
                 <a type="link">取消邀请</a>
               </Popconfirm>
-            )}
-            {record.dataStatus == 0 && (
+            ) }
+            { record.dataStatus == 0 && (
               <a
                 type="link"
-                onClick={async () => {
+                onClick={ async () => {
                   fetchUserRoleId(record);
-                }}
+                } }
               >
                 修改角色
               </a>
-            )}
-            {record.dataStatus == 0 && <Divider type="vertical" />}
-            {(record.dataStatus === 0 || record.dataStatus === 1) && (
+            ) }
+            { record.dataStatus == 0 && <Divider type="vertical" /> }
+            { (record.dataStatus === 0 || record.dataStatus === 1) && (
               <a
                 type="link"
-                onClick={async () =>
+                onClick={ async () =>
                   switchUserStatus(record.id?.toString(), record.dataStatus === 0)
                 }
               >
-                {/* 修改角色 */}
-                {record.dataStatus === 0 ? '禁用' : '启用'}
+                {/* 修改角色 */ }
+                { record.dataStatus === 0 ? '禁用' : '启用' }
               </a>
-            )}
+            ) }
           </>
         ),
     },
@@ -245,6 +249,23 @@ const ResumeList: React.FC<UserListDataType> = () => {
       );
     }
   };
+  const fetchSiteListData = async () => {
+    if (siteData === undefined) {
+      const response = await queryCurUserSiteList();
+      if (!response) return;
+      await setSiteData(
+        response.data.map((item: any) => ({
+          label: item.siteName,
+          value: item.siteId,
+        })),
+      );
+    }
+  };
+
+  // const fetchCurUserSiteListData = async () => {
+  //   CUR_USER_SITE_LIST
+  // }
+
   const fetchQueryUserList = async (params: any) => {
     const response = await queryUserList(params);
     if (!response) return { data: [] };
@@ -252,55 +273,57 @@ const ResumeList: React.FC<UserListDataType> = () => {
     return { ...data, data: data.records };
   };
   return (
-    <PageContainer header={{ title: '' }}>
+    <PageContainer header={ { title: '' } }>
       <ProTable
-        bordered={true}
+        bordered={ true }
         // scroll={{ x: true }}
         //    & {
         //     scrollToFirstRowOnChange?: boolean;
         // };
-        scroll={{ x: 800 }}
+        scroll={ { x: 800 } }
         size="small"
         headerTitle="查询表格"
-        actionRef={actionRef}
+        actionRef={ actionRef }
         rowKey="id"
-        pagination={{
+        pagination={ {
           pageSize: 10,
-        }}
-        toolBarRender={() => [
+        } }
+        toolBarRender={ () => [
           <Button
             type="primary"
-            onClick={async () => {
+            onClick={ async () => {
+              await fetchSiteListData();
               await fetchRoleListData();
               await setInitialRoleIds([]);
               handleModalVisible(true);
               setCurrentRow(undefined);
-            }}
+            } }
           >
             <PlusOutlined />
             邀请人员
           </Button>,
-        ]}
-        request={async (params, sorter, filter) =>
+        ] }
+        request={ async (params, sorter, filter) =>
           await fetchQueryUserList({ ...params, sorter, filter })
         }
-        columns={columns}
+        columns={ columns }
         // rowSelection={ {
         //   onChange: (_, selectedRows: any) => setSelectedRows(selectedRows),
         // } }
-        rowSelection={false}
+        rowSelection={ false }
       />
-      {createModalVisible && (
+      { createModalVisible && (
         <ModalModifyForm
-          createModalVisible={createModalVisible}
-          handleModalVisible={handleModalVisible}
-          actionRef={actionRef}
-          currentRow={currentRow}
-          roleData={roleData}
-          initialRoleIds={initialRoleIds}
-          setShowDetail={setShowDetail}
+          createModalVisible={ createModalVisible }
+          handleModalVisible={ handleModalVisible }
+          actionRef={ actionRef }
+          currentRow={ currentRow }
+          roleData={ roleData }
+          siteData={ siteData }
+          initialRoleIds={ initialRoleIds }
+          setShowDetail={ setShowDetail }
         />
-      )}
+      ) }
       {/* {createModalPasswordVisible && currentRow && (
         <ModalModifyPasswordForm
           createModalVisible={createModalPasswordVisible}
@@ -310,41 +333,41 @@ const ResumeList: React.FC<UserListDataType> = () => {
           setShowDetail={setShowDetail}
         />
       )} */}
-      {modalAuthifyVisible && (
+      { modalAuthifyVisible && (
         <ModalAuthifyForm
-          modalAuthifyVisible={modalAuthifyVisible}
-          handleModalAuthifyVisible={handleModalAuthifyVisible}
-          actionRef={actionRef}
-          currentRow={currentRow}
-          roleData={roleData}
-          initialRoleIds={initialRoleIds}
-          setShowDetail={setShowDetail}
+          modalAuthifyVisible={ modalAuthifyVisible }
+          handleModalAuthifyVisible={ handleModalAuthifyVisible }
+          actionRef={ actionRef }
+          currentRow={ currentRow }
+          roleData={ roleData }
+          initialRoleIds={ initialRoleIds }
+          setShowDetail={ setShowDetail }
         />
-      )}
+      ) }
       <Drawer
-        width={600}
-        visible={showDetail}
-        onClose={() => {
+        width={ 600 }
+        visible={ showDetail }
+        onClose={ () => {
           setCurrentRow(undefined);
           setShowDetail(false);
-        }}
-        closable={false}
+        } }
+        closable={ false }
       >
-        {currentRow?.mobile && (
+        { currentRow?.mobile && (
           <ProDescriptions<UserListDataType>
-            column={2}
-            bordered={true}
-            title={currentRow?.username}
-            key={currentRow?.id}
-            request={async () => ({
+            column={ 2 }
+            bordered={ true }
+            title={ currentRow?.username }
+            key={ currentRow?.id }
+            request={ async () => ({
               data: currentRow || {},
-            })}
-            params={{
+            }) }
+            params={ {
               id: currentRow?.id,
-            }}
-            columns={columns as ProDescriptionsItemProps<UserListDataType>[]}
+            } }
+            columns={ columns as ProDescriptionsItemProps<UserListDataType>[] }
           />
-        )}
+        ) }
       </Drawer>
     </PageContainer>
   );
