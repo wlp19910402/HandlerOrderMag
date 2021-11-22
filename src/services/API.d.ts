@@ -14,7 +14,7 @@ export default {
 
   ROLE_EDIT: '/handler/sys/role/edit',//角色编辑
   ROLE_CREATE: '/handler/sys/role/add',//角色创建
-
+  ROLE_DELETE: '/handler/sys/role/delete',//del/{id}
   // 用户管理接口
   // USER_LOGIN: '/api/sys/login',
   // USER_CURRENT: "/api/user/current",
@@ -34,7 +34,6 @@ export default {
   ROLE_BIND: '/api/sys/role/bind',
   ROLE_GET_MENU: '/api/sys/role/menu', // 绑定权限回显/sys/role/menu/{id}
   ROLE_INFO: '/api/sys/role/detail', /// sys/role/detail/{id}
-  ROLE_DELETE: '/api/sys/role/del', // 角色删除/sys/role/del/{id}
   // 菜单管理接口
   MENU_TREE: '/api/sys/menu/tree', // 当前用户菜单【用于用户登录后菜单加载】
   MENU_SAVE: '/api/sys/menu/save', // 添加或编辑菜单

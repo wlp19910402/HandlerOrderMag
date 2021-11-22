@@ -17,7 +17,7 @@ type ModalModifyFormDataProps = {
 const ModalModifyForm: React.FC<ModalModifyFormDataProps> = (props) => {
   const { createModalVisible, handleModalVisible, actionRef, currentRow } = props
   const submitForm = async (value: RoleDataType) => {
-    const response = await value.id !== undefined ? editRole(value) : createRole(value)
+    const response = await (value.id !== undefined ? editRole(value) : createRole(value))
     if (!response) return
     handleModalVisible(false);
     message.success(`${value.id !== undefined ? '修改' : '添加'}成功`);
