@@ -2,9 +2,6 @@ import type { RoleDataType } from './data.d';
 import API from '@/services/API.d'
 import type { SaveRoleParamsType } from './components/ModalMenuTree'
 import httpServer from '@/utils/httpServer'
-//
-
-
 
 // 当前用户网点列表
 export const queryCurUserSiteList = async () => {
@@ -16,7 +13,6 @@ export const queryRoleList = async () => {
   return await httpServer.get(API.ROLE_LIST);
 }
 
-
 // 角色编辑
 export const editRole = async (params: RoleDataType) => {
   return await httpServer.post(API.ROLE_EDIT, { data: params })
@@ -26,7 +22,7 @@ export const createRole = async (params: RoleDataType) => {
   return await httpServer.post(API.ROLE_CREATE, { data: params })
 }
 // 删除用户
-export const deleteRole = async (id: string) => {
+export const deleteRole = async (id: number) => {
   return await httpServer.get(`${API.ROLE_DELETE}/${id}`)
 }
 // 角色绑定

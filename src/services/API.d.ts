@@ -1,15 +1,17 @@
 export default {
   HANDLER_ORDER_MAG: '/handler/login',
   HANDLER_ORDER_CODE: '/handler/code/image/base64',
-  USER_CURRENT: '/handler/sys/current/user/info',
-  USER_LIST: '/handler/sys/user/list', //获取用户列表
-  MENU_CURRENT_TREE: '/handler/sys/current/perm/list', // 当前用户菜单【用于用户登录后菜单加载】
-  USER_STATUS: '/handler/sys/user/update/status', /// //系统用户更改状态sys/update/status/{id}
+  USER_CURRENT: '/handler/user/current',
+  USER_LIST: '/handler/user/list', //获取用户列表
+  MENU_CURRENT_TREE: '/handler/current/perm/list', // 当前用户菜单【用于用户登录后菜单加载】
+  USER_STATUS: '/handler/user/update/status', /// //系统用户更改状态sys/update/status/{id}
+  USER_ADD: '/handler/user/saveOrUpdate',//用户添加
+  USER_DELETE: '/handler/user/cancel/', /// user/del/{id}//删除用户
   // ROLE_USERID_CHECKID: '/handler/sys/user/role/list', //当前用户下所有的角色列表
+  USER_LIST_BY_ROLE_ID: '/user/current/user/info',//{ roleId }根据角色id查询用户
   ROLE_LIST: '/handler/sys/role/list',
   USER_BIND_ROLE_EDIT: '/handler/sys/user/role/edit',
-  USER_ADD: '/handler/sys/user/saveOrUpdate',
-  USER_DELETE: '/handler/sys/user/cancel/', /// user/del/{id}
+
   CUR_USER_SITE_LIST: '/handler/site/user/site/list',//当前用户的网点
 
   ROLE_EDIT: '/handler/sys/role/edit',//角色编辑

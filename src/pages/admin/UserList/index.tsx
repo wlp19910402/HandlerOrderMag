@@ -18,8 +18,8 @@ import type { UserListDataType, searchBindFlag } from '../data.d';
 import ModalModifyForm from './components/ModalModifyForm';
 import { queryRoleList, queryCurUserSiteList } from '@/pages/admin/Role/service';
 import ModalAuthifyForm from './components/ModalAuthifyForm';
-import ModalModifyPasswordForm from './components/ModalModifyPasswordForm';
-const { Option } = Select;
+// import ModalModifyPasswordForm from './components/ModalModifyPasswordForm';
+// const { Option } = Select;
 export type RoleCheckBoxDataType = {
   label: string;
   value: number;
@@ -92,7 +92,6 @@ const ResumeList: React.FC<UserListDataType> = () => {
       hideInSearch: true,
       dataIndex: 'accountAuth',
       valueEnum: {
-        // ...searchBindFlag,
         0: { text: '已认证', status: 'Processing' },
         1: { text: '未认证', status: 'Default' },
       },
@@ -122,8 +121,8 @@ const ResumeList: React.FC<UserListDataType> = () => {
     },
     {
       title: '状态',
-      key: 'dataStatus',
-      dataIndex: 'dataStatus',
+      key: 'status',
+      dataIndex: 'status',
       valueEnum: {
         0: { text: '启用', status: 'Success' },
         1: { text: '禁用', status: 'Error' },
@@ -132,18 +131,6 @@ const ResumeList: React.FC<UserListDataType> = () => {
         4: { text: '审核失败', status: 'Default' },
       },
     },
-    // {
-    //   title: "状态",
-    //   dataIndex: 'status',
-    //   hideInSearch: true,
-    //   hideInForm: true,
-    //   key: "status",
-    //   render: ((val, record) => {
-    //     return (<Switch disabled={ record.id === 1 } loading={ false } onClick={ async (checked: boolean, event: Event) => {
-    //       record.id !== undefined && switchUserStatus(record.id?.toString(), val === 1)
-    //     } } checkedChildren='启用' unCheckedChildren='禁用' defaultChecked={ val === 1 } />)
-    //   })
-    // },
     {
       title: '操作',
       valueType: 'option',
@@ -151,11 +138,11 @@ const ResumeList: React.FC<UserListDataType> = () => {
       width: '140px',
       fixed: 'right',
       render: (_, record) =>
-        record.superAdmin === 0 ? (
+        record.superAdmin ? (
           []
         ) : (
           <>
-            { record.dataStatus == 2 && (
+            { record.status == 2 && (
               <Popconfirm
                 title="是否取消邀请？"
                 onConfirm={ () => {
@@ -165,7 +152,7 @@ const ResumeList: React.FC<UserListDataType> = () => {
                 <a type="link">取消邀请</a>
               </Popconfirm>
             ) }
-            { record.dataStatus == 0 && (
+            { record.status == 0 && (
               <a
                 type="link"
                 onClick={ async () => {
@@ -175,16 +162,16 @@ const ResumeList: React.FC<UserListDataType> = () => {
                 修改角色
               </a>
             ) }
-            { record.dataStatus == 0 && <Divider type="vertical" /> }
-            { (record.dataStatus === 0 || record.dataStatus === 1) && (
+            { record.status == 0 && <Divider type="vertical" /> }
+            { (record.status === 0 || record.status === 1) && (
               <a
                 type="link"
                 onClick={ async () =>
-                  switchUserStatus(record.id?.toString(), record.dataStatus === 0)
+                  switchUserStatus(record.id?.toString(), record.status === 0)
                 }
               >
                 {/* 修改角色 */ }
-                { record.dataStatus === 0 ? '禁用' : '启用' }
+                { record.status === 0 ? '禁用' : '启用' }
               </a>
             ) }
           </>

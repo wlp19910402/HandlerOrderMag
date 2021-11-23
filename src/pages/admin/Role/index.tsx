@@ -1,5 +1,5 @@
 import { PlusOutlined, EditOutlined, DeleteOutlined, AuditOutlined } from '@ant-design/icons';
-import { Button, Drawer, message, Popconfirm, Tooltip, Badge } from 'antd';
+import { Button, Drawer, message, Popconfirm, Tooltip, Divider } from 'antd';
 import React, { useState, useRef, useEffect } from 'react';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import type { ProColumns, ActionType, } from '@ant-design/pro-table';
@@ -11,6 +11,10 @@ import { queryRoleList, deleteRole } from './service';
 import type { RoleDataType } from './data.d';
 import ModalModifyForm from './components/ModalModifyForm'
 import ModalMenuTree from './components/ModalMenuTree'
+import LineWrap from '@/components/common/LineWrap'
+import { queryUserByRoleId } from '@/pages/admin/UserList/service'
+import type { UserListDataType } from '../data.d';
+import styles from './styles.less'
 /**
  *  删除节点
  * @param selectedRows
@@ -32,103 +36,67 @@ import ModalMenuTree from './components/ModalMenuTree'
 //   }
 // };
 
-type TableListItem = {
-  createdAtRange?: number[];
-  createdAt: number;
-  code: string;
-};
+
 
 type DetailListProps = {
   id: number | null;
 };
 const DetailList: React.FC<DetailListProps> = (props) => {
   const { id } = props;
-  const [ tableListDataSource, setTableListDataSource ] = useState<TableListItem[]>([]);
+  const [ userListByRoleId, setUserListByRoleId ] = useState<UserListDataType[]>([]);
 
-  const columns: ProColumns<TableListItem>[] = [
+  const columns: ProColumns<UserListDataType>[] = [
     {
-      title: '时间点',
-      key: 'createdAt',
-      dataIndex: 'createdAt',
-      valueType: 'dateTime',
+      title: '姓名',
+      key: 'username',
+      dataIndex: 'username',
     },
     {
-      title: '代码',
-      key: 'code',
+      title: '手机号',
+      key: 'mobile',
       width: 80,
-      dataIndex: 'code',
-      valueType: 'code',
-    },
-    {
-      title: '操作',
-      key: 'option',
-      width: 80,
-      valueType: 'option',
-      render: () => [ <a key="a">预警</a> ],
+      dataIndex: 'mobile',
     },
   ];
 
   useEffect(() => {
-    const source = [];
-    for (let i = 0; i < 15; i += 1) {
-      source.push({
-        createdAt: Date.now() - Math.floor(Math.random() * 10000),
-        code: `const getData = async params => {
-          const data = await getData(params);
-          return { list: data.data, ...data };
-        };`,
-        key: i,
-      });
-    }
 
-    setTableListDataSource(source);
+    // if (id) queryUserByRoleId({ id: id }).then(res => {
+    //   setUserListByRoleId(res.data);
+    // })
+
   }, [ id ]);
 
   return (
-    <ProTable<TableListItem>
+    <ProTable<UserListDataType>
+      toolBarRender={ () => [
+        <Button type="primary" >
+          <PlusOutlined />保存
+        </Button>,
+      ] }
+      bordered={ true }
       columns={ columns }
-      dataSource={ tableListDataSource }
+      headerTitle="权限"
+      dataSource={ userListByRoleId }
       pagination={ {
         pageSize: 3,
         showSizeChanger: false,
       } }
       rowKey="key"
-      toolBarRender={ false }
+      // toolBarRender={ false }
       search={ false }
     />
   );
 };
 
-type statusType = BadgeProps[ 'status' ];
-
-const valueEnum: statusType[] = [ 'success', 'error', 'processing', 'default' ];
-
-export type IpListItem = {
-  ip?: string;
-  cpu?: number | string;
-  mem?: number | string;
-  disk?: number | string;
-  status: statusType;
-};
-
-const ipListDataSource: IpListItem[] = [];
-
-for (let i = 0; i < 10; i += 1) {
-  ipListDataSource.push({
-    ip: `106.14.98.1${i}4`,
-    cpu: 10,
-    mem: 20,
-    status: valueEnum[ Math.floor(Math.random() * 10) % 4 ],
-    disk: 30,
-  });
-}
 
 type RoleListProps = {
   onChange: (id: number) => void;
+  id: number | null;
 }
 
-
 const RoleList: React.FC<RoleListProps> = (props) => {
+  const { id } = props
   const { onChange } = props;
   const [ showDetail, setShowDetail ] = useState<boolean>(false);
   const actionRef = useRef<ActionType>();
@@ -136,19 +104,19 @@ const RoleList: React.FC<RoleListProps> = (props) => {
   const [ selectedRowsState, setSelectedRows ] = useState<RoleDataType[]>([]);
   const [ createModalVisible, handleModalVisible ] = useState<boolean>(false);
   const [ modalTreeVisible, handleModalTreeVisible ] = useState<boolean>(false);
-  const columns: ProColumns<any>[] | undefined = [
+  const columns: ProColumns<RoleDataType>[] | undefined = [
     {
       title: "角色名称",
       dataIndex: 'name',
-      tip: '规则名称是唯一的 key',
+      // tip: '规则名称是唯一的 key',
       key: 'name',
       render: (val, entity) => {
         return (
           <a
-            onClick={ () => {
-              setCurrentRow(entity);
-              setShowDetail(true);
-            } }
+          // onClick={ () => {
+          //   // setCurrentRow(entity);
+          //   // setShowDetail(true);
+          // } }
           >
             { `${val}` }
           </a>
@@ -159,39 +127,40 @@ const RoleList: React.FC<RoleListProps> = (props) => {
       title: "备注",
       dataIndex: 'remark',
       hideInForm: true,
+      render: (val: any) => (
+        <LineWrap title={ val || '' }></LineWrap>
+      )
     },
     {
       title: "操作",
-      width: 40,
+      width: 68,
       valueType: 'option',
       key: "option",
-      render: (_, record) => [
+      render: (_, record) => (<>
         <Tooltip title="编辑" key="edit">
-          <Button
-            type="link"
-            size="small"
-            onClick={ async () => { handleModalVisible(true); setCurrentRow(record); } }
-          >
+          <a onClick={ async () => { handleModalVisible(true); setCurrentRow(record); } }>
             <EditOutlined className="qm-table-icon" />
-          </Button>
-        </Tooltip>,
+          </a>
+        </Tooltip>
+        <Divider type="vertical" />
         <Tooltip title="删除" key="delete">
           <Popconfirm
             title="是否要删除此行？"
-            onConfirm={ () => { record.id !== undefined && tiggerDeleteRole(record.id?.toString()); } }>
-            <Button size="small" type="link"><DeleteOutlined className="qm-table-icon" /></Button>
+            onConfirm={ () => { record.id !== undefined && tiggerDeleteRole(record.id); } }>
+            <a><DeleteOutlined className="qm-table-icon" /></a>
           </Popconfirm>
-        </Tooltip>,
-        // <Tooltip title="绑定权限" key="setBindRole">
+        </Tooltip>
+        {/* // <Tooltip title="绑定权限" key="setBindRole">
         //   <Button size="small" type="link" onClick={ () => { handleModalTreeVisible(true); setCurrentRow(record); } }>
         //     <AuditOutlined className="qm-table-icon" />
         //   </Button>
-        // </Tooltip>
-      ]
+        // </Tooltip> */}
+      </>)
+
     }
   ];
-  const tiggerDeleteRole = async (id: string) => {
-    const response = await deleteRole(id)
+  const tiggerDeleteRole = async (paramsId: number) => {
+    const response = await deleteRole(paramsId)
     if (!response) return
     actionRef.current && actionRef.current.reloadAndRest?.();
     message.success("删除成功")
@@ -201,7 +170,10 @@ const RoleList: React.FC<RoleListProps> = (props) => {
       <ProTable
         bordered={ true }
         size="small"
-        headerTitle="查询表格"
+        rowClassName={ (record: RoleDataType) => {
+          return record.id === id ? styles[ 'split-row-select-active' ] : (record.id + '--' + id);
+        } }
+        headerTitle="角色"
         actionRef={ actionRef }
         rowKey="id"
         onRow={ (record) => {
@@ -220,6 +192,7 @@ const RoleList: React.FC<RoleListProps> = (props) => {
         pagination={ {
           pageSize: 10,
         } }
+        scroll={ { y: 600 } }
         toolBarRender={ () => [
           <Button type="primary" onClick={ () => { handleModalVisible(true); setCurrentRow(undefined); } }>
             <PlusOutlined />新建
@@ -313,10 +286,13 @@ const Demo: React.FC = () => {
   const [ id, setIp ] = useState<number | null>(null);
   return (
     <ProCard split="vertical">
-      <ProCard colSpan="284px" ghost>
-        <RoleList onChange={ (id: number) => setIp(id) } />
+      <ProCard colSpan={ 8 } ghost>
+        <RoleList id={ id } onChange={ (id: number) => setIp(id) } />
       </ProCard>
-      <ProCard title={ id }>
+      <ProCard colSpan={ 8 } ghost>
+        <DetailList id={ id } />
+      </ProCard>
+      <ProCard colSpan={ 8 } ghost>
         <DetailList id={ id } />
       </ProCard>
     </ProCard>

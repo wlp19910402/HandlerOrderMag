@@ -19,8 +19,8 @@ export default {
       pathRewrite: { '^/uploadAliyuncs': '' },
     },
     '/handler/': {
-      target: 'http://192.168.16.103:8888/',//童本地
-      // target: 'http://manager-api.dev.echobing.com',
+      // target: 'http://192.168.16.103:8888/',//童本地
+      target: 'http://manager-api.dev.echobing.com',
       changeOrigin: true,
       pathRewrite: { '^/handler/': '/' },
     }

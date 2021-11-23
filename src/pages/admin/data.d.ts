@@ -11,9 +11,9 @@ export type UserListDataType = {
   roleName?: string;
   status?: string;
   username: string;
-  dataStatus?: number; //0:启用、1:禁用、2:待加入、3:审核中、4:审核成功、5:审核失败
+  status?: number; //0:启用、1:禁用、2:待加入、3:审核中、4:审核成功、5:审核失败
   accountAuth?: number;
-  superAdmin?: number; //0: 超级管理员 ；1:普通人员
+  superAdmin?: boolean; //1: 超级管理员 ；0:普通人员
   roleList?: RoleListType[];
 };
 export const searchBindFlag = {
@@ -29,7 +29,7 @@ export type UserSearchType = {
   username?: string; // 用户名
   roleId?: number;
   mobile?: string;
-  dataStatus?: number;
+  status?: number;
 } & PageDataType;
 export type EditUserDataType = {
   mobile: string;

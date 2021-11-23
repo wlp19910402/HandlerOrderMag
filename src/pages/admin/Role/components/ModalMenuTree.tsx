@@ -5,7 +5,7 @@ import React, { useState, useEffect } from 'react';
 import type { ActionType } from '@ant-design/pro-table';
 import type { RoleDataType } from '../data.d';
 import { message, Modal, Tree } from 'antd'
-import type { Dispatch} from 'umi';
+import type { Dispatch } from 'umi';
 import { connect } from 'umi'
 import type { MenuModelState } from '@/models/menu'
 import { treeData } from '@/pages/admin/Menu/index'
