@@ -21,8 +21,14 @@ export const queryUserList = async (params: UserSearchType) => {
 };
 //根据角色查询用户列表
 
-export const queryUserByRoleId = async (params: { id: number }) => {
-  return await httpServer.get(API.USER_LIST_BY_ROLE_ID + '/' + params.id);
+export const queryUserByRoleId = async (params: any) => {
+  return await httpServer.get(API.USER_LIST_BY_ROLE, {
+    params: {
+      pageSize: params.pageSize,
+      pageNo: params.current,
+      roleId: params.roleId,
+    },
+  });
 };
 
 export const queryUserNotBindWxList = async (params: UserSearchType) => {
@@ -45,7 +51,7 @@ export const editUserPassword = async (params: any) => {
   return httpServer.post(API.USER_EDIT_PWD, { data: params });
 };
 // 授权信息添加 修改用户角色
-export async function saveUserAuthority (params: UserAuthorityType) {
+export async function saveUserAuthority(params: UserAuthorityType) {
   // return httpServer.post(API.USER_AUTHORITY, { data: params });
   return httpServer.post(API.USER_BIND_ROLE_EDIT, { data: params });
 }
