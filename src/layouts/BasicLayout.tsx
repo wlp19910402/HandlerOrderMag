@@ -26,7 +26,7 @@ import { IconFont } from '@/components/common/IconFont'
 
 const noMatch = (
   <Result
-    status={403}
+    status={ 403 }
     title="403"
     subTitle="Sorry, you are not authorized to access this page."
     extra={
@@ -38,22 +38,22 @@ const noMatch = (
 );
 export type BasicLayoutProps = {
   breadcrumbNameMap: Record<string, MenuDataItem>;
-  route: ProLayoutProps['route'] & {
+  route: ProLayoutProps[ 'route' ] & {
     authority: string[];
   };
   settings: Settings;
   dispatch: Dispatch;
   currentMenu: MenuDataType[] | [];
 } & ProLayoutProps
-export type BasicLayoutContext = { [K in 'location']: BasicLayoutProps[K] } & {
+export type BasicLayoutContext = { [ K in 'location' ]: BasicLayoutProps[ K ] } & {
   breadcrumbNameMap: Record<string, MenuDataItem>;
 };
 const menuDataRender = (menuList: MenuDataItem[]): MenuDataItem[] => menuList.map((item) => {
   const localItem = {
-    icon: item.icon ? <IconFont type={item.icon.toString()} /> : undefined,
+    icon: item.icon ? <IconFont type={ item.icon.toString() } /> : undefined,
     name: item.name,
     path: item.url,
-    parentKeys: [item.parentId.toString()],
+    parentKeys: [ item.parentId.toString() ],
     key: item.id.toString(),
     routes: item.children && item.children?.length ? menuDataRender(item.children) : undefined,
     children: item.children && item.children?.length ? menuDataRender(item.children) : undefined,
@@ -65,8 +65,9 @@ const menuDataRender = (menuList: MenuDataItem[]): MenuDataItem[] => menuList.ma
 
 const defaultFooterDom = (
   <DefaultFooter
-    copyright={`${new Date().getFullYear()}e呼必应`}
-    links={false}
+    style={ { margin: '0' } }
+    copyright={ `${new Date().getFullYear()}e呼必应` }
+    links={ false }
   />
 );
 const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
@@ -93,13 +94,13 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
       getMatchMenu(location.pathname || '/', menuDataRef.current).pop() || {
         authority: undefined,
       },
-    [location.pathname],
+    [ location.pathname ],
   );
   return (
     <>
       {
         currentMenu.length > 0 && <ProLayout
-          style={{ backgroundColor: '#1B90FF', }}
+          style={ { backgroundColor: '#1B90FF', } }
           // menuHeaderRender={(logo, title) => (
           //   <div
           //     id="customize_menu_header"
@@ -112,22 +113,22 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
           //   </div>
           // )}
           // siderWidth={1200}
-          menuDataRender={() => menuDataRender(currentMenu)}
-          logo={'logo.png'}
+          menuDataRender={ () => menuDataRender(currentMenu) }
+          logo={ 'logo.png' }
           fixSiderbar
           // headerRender={true}
-          {...props}
-          {...settings}
+          { ...props }
+          { ...settings }
           // title={'dddd'}
-          onCollapse={handleMenuCollapse}
-          onMenuHeaderClick={() => history.push('/')}
-          menuItemRender={(menuItemProps, defaultDom) => {
+          onCollapse={ handleMenuCollapse }
+          onMenuHeaderClick={ () => history.push('/') }
+          menuItemRender={ (menuItemProps, defaultDom) => {
             if (menuItemProps.isUrl || !menuItemProps.path) {
               return defaultDom;
             }
-            return <Link to={menuItemProps.path}>{defaultDom}</Link>;
-          }}
-          breadcrumbRender={(routers = []) => {
+            return <Link to={ menuItemProps.path }>{ defaultDom }</Link>;
+          } }
+          breadcrumbRender={ (routers = []) => {
             return [
               {
                 path: '/',
@@ -135,24 +136,24 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
               },
               ...routers,
             ]
-          }}
-          itemRender={(route, params, routes, paths) => {
+          } }
+          itemRender={ (route, params, routes, paths) => {
             const first = routes.indexOf(route) === 0;
             return first ? (
-              <Link to={paths.join('/')}>{route.breadcrumbName}</Link>
+              <Link to={ paths.join('/') }>{ route.breadcrumbName }</Link>
             ) : (
-              <span>{route.breadcrumbName}</span>
+              <span>{ route.breadcrumbName }</span>
             );
-          }}
-          footerRender={() => defaultFooterDom}
-          rightContentRender={() => <RightContent />}
+          } }
+          footerRender={ () => defaultFooterDom }
+          rightContentRender={ () => <RightContent /> }
         // postMenuData={(menuData) => {
         //   menuDataRef.current = menuData || [];
         //   return menuData || [];
         // }}
         >
-          <Authorized authority={authorized!.authority} noMatch={noMatch}>
-            {children}
+          <Authorized authority={ authorized!.authority } noMatch={ noMatch }>
+            { children }
           </Authorized>
         </ProLayout>
       }

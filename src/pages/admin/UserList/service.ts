@@ -19,8 +19,11 @@ export const queryUserList = async (params: UserSearchType) => {
     },
   });
 };
+//根据角色查询当前角色的权限列表及其权限信息
+export const queryPermByRoleId = async (params: any) => {
+  return await httpServer.get(API.PERM_LIST_BY_ROLE + '/' + params.roleId);
+};
 //根据角色查询用户列表
-
 export const queryUserByRoleId = async (params: any) => {
   return await httpServer.get(API.USER_LIST_BY_ROLE, {
     params: {
@@ -51,7 +54,7 @@ export const editUserPassword = async (params: any) => {
   return httpServer.post(API.USER_EDIT_PWD, { data: params });
 };
 // 授权信息添加 修改用户角色
-export async function saveUserAuthority(params: UserAuthorityType) {
+export async function saveUserAuthority (params: UserAuthorityType) {
   // return httpServer.post(API.USER_AUTHORITY, { data: params });
   return httpServer.post(API.USER_BIND_ROLE_EDIT, { data: params });
 }

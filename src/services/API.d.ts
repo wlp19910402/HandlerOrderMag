@@ -9,6 +9,7 @@ export default {
   USER_DELETE: '/handler/user/cancel/', /// user/del/{id}//删除用户
   // ROLE_USERID_CHECKID: '/handler/sys/user/role/list', //当前用户下所有的角色列表
   USER_LIST_BY_ROLE: '/handler/user/list-by-role', //{ roleId }根据角色id查询用户
+  PERM_LIST_BY_ROLE: '/handler/sys/perm/list-union-role',//{ roleId }根据角色id查询所有权限
   ROLE_LIST: '/handler/sys/role/list',
   USER_BIND_ROLE_EDIT: '/handler/sys/user/role/edit',
 
