@@ -145,7 +145,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
               <span>{ route.breadcrumbName }</span>
             );
           } }
-          footerRender={ () => defaultFooterDom }
+          // footerRender={ () => defaultFooterDom }
           rightContentRender={ () => <RightContent /> }
         // postMenuData={(menuData) => {
         //   menuDataRef.current = menuData || [];

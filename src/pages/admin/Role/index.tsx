@@ -1,5 +1,5 @@
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Button, Drawer, message, Popconfirm, Tooltip, Divider } from 'antd';
+import { Button, Drawer, message, Popconfirm, Tooltip, Divider, PageHeader } from 'antd';
 import React, { useState, useRef } from 'react';
 import { FooterToolbar } from '@ant-design/pro-layout';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
@@ -43,8 +43,9 @@ const RoleList: React.FC<RoleListProps> = (props) => {
     },
     {
       title: '操作',
-      width: 68,
+      width: 80,
       valueType: 'option',
+      align: "center",
       key: 'option',
       render: (_, record) => (
         <>
@@ -87,14 +88,28 @@ const RoleList: React.FC<RoleListProps> = (props) => {
     message.success('删除成功');
   };
   return (
-    <>
+    <PageHeader
+      className="qm-role-menu-header"
+      title="角色"
+      style={ { margin: 0, padding: '10px 10px 0' } }
+      extra={ [ <Button type="primary" onClick={ () => {
+        handleModalVisible(true);
+        setCurrentRow(undefined);
+      } }
+      >
+        <PlusOutlined />
+        新建
+      </Button>
+      ] }
+    >
       <ProTable
+        className="qm-role-table"
         bordered={ true }
         size="small"
         rowClassName={ (record: RoleDataType) => {
           return record.id === id ? styles[ 'split-row-select-active' ] : record.id + '--' + id;
         } }
-        headerTitle="角色"
+        style={ { marginTop: '-2px' } }
         actionRef={ actionRef }
         rowKey="id"
         onRow={ (record) => {
@@ -121,19 +136,8 @@ const RoleList: React.FC<RoleListProps> = (props) => {
           style: { justifyContent: 'center' },
           hideOnSinglePage: true
         } }
-        scroll={ { y: 600 } }
-        toolBarRender={ () => [
-          <Button
-            type="primary"
-            onClick={ () => {
-              handleModalVisible(true);
-              setCurrentRow(undefined);
-            } }
-          >
-            <PlusOutlined />
-            新建
-          </Button>,
-        ] }
+        scroll={ { y: 'calc(100vh - 260px)' } }
+        toolBarRender={ false }
         request={ async (params, sorter, filter) => {
           const response = await queryRoleList();
           if (!response) return;
@@ -182,7 +186,7 @@ const RoleList: React.FC<RoleListProps> = (props) => {
           </Popconfirm>
         </FooterToolbar>
       ) }
-    </>
+    </PageHeader>
   );
 };
 

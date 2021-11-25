@@ -50,7 +50,7 @@ const ModalModifyForm: React.FC<ModalModifyFormDataProps> = (props) => {
         okText: '邀请',
       } }
       title={ currentRow?.id !== undefined ? '用户编辑' : '邀请人员' }
-      width="400px"
+      width="640px"
       visible={ createModalVisible }
       onVisibleChange={ handleModalVisible }
       onFinish={ async (value) => {

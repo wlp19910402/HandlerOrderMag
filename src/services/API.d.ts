@@ -5,7 +5,7 @@ export default {
   USER_LIST: '/handler/user/list', //获取用户列表
   MENU_CURRENT_TREE: '/handler/current/perm/list', // 当前用户菜单【用于用户登录后菜单加载】
   USER_STATUS: '/handler/user/update/status', /// //系统用户更改状态sys/update/status/{id}
-  USER_ADD: '/handler/user/saveOrUpdate', //用户添加
+  USER_ADD: '/handler/user/invitation', //邀请用户
   USER_DELETE: '/handler/user/cancel/', /// user/del/{id}//删除用户
   // ROLE_USERID_CHECKID: '/handler/sys/user/role/list', //当前用户下所有的角色列表
   USER_LIST_BY_ROLE: '/handler/user/list-by-role', //{ roleId }根据角色id查询用户
@@ -19,6 +19,7 @@ export default {
   ROLE_EDIT: '/handler/sys/role/edit', //角色编辑
   ROLE_CREATE: '/handler/sys/role/add', //角色创建
   ROLE_DELETE: '/handler/sys/role/delete', //del/{id}
+  ROLE_BIND: '/handler/sys/role/bind',
   // 用户管理接口
   // USER_LOGIN: '/api/sys/login',
   // USER_CURRENT: "/api/user/current",
@@ -35,7 +36,7 @@ export default {
   // 角色管理接口
   // ROLE_USERID_CHECKID: '/api/sys/role/list', // 角色列表标记指定用户拥有的权限/sys/role/list/{userId}
 
-  ROLE_BIND: '/api/sys/role/bind',
+
   ROLE_GET_MENU: '/api/sys/role/menu', // 绑定权限回显/sys/role/menu/{id}
   ROLE_INFO: '/api/sys/role/detail', /// sys/role/detail/{id}
   // 菜单管理接口

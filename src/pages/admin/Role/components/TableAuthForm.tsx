@@ -1,5 +1,5 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Tree } from 'antd';
+import { Button, Tree, PageHeader, Spin } from 'antd';
 import React, { useState, useRef, useEffect } from 'react';
 // import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
@@ -15,6 +15,8 @@ import ProCard from '@ant-design/pro-card';
 import { queryPermByRoleId, queryPermAllData } from '@/pages/admin/UserList/service';
 import type { UserListDataType } from '../../data';
 import type { DataNode } from 'rc-tree/lib/interface.d';
+import ProList from '@ant-design/pro-list';
+import { RoleBindMenu } from '@/pages/admin/Role/service'
 // import styles from './styles.less';
 
 type DetailListProps = {
@@ -27,13 +29,17 @@ type permListType = {
   checked?: boolean;
   children?: permListType[];
 };
-
+export type SaveRoleParamsType = {
+  permIds: number[];
+  roleId: number | null;
+}
 const TableAuthForm: React.FC<DetailListProps> = (props) => {
   const { id } = props;
-  const [permListByRoleId, setpermListByRoleId] = useState<DataNode[]>([]);
-  const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
-  const [checkedKeys, setCheckedKeys] = useState<React.Key[]>([]);
-  const [selectedKeys, setSelectedKeys] = useState<React.Key[]>([]);
+  const [ permListByRoleId, setpermListByRoleId ] = useState<DataNode[]>([]);
+  const [ expandedKeys, setExpandedKeys ] = useState<React.Key[]>([]);
+  const [ checkedKeys, setCheckedKeys ] = useState<number[] | []>([]);
+  const [ selectedKeys, setSelectedKeys ] = useState<React.Key[]>([]);
+  const [ loading, setLoading ] = useState<boolean | undefined>(false)
   const actionRef = useRef<ActionType>();
 
   useEffect(() => {
@@ -48,7 +54,7 @@ const TableAuthForm: React.FC<DetailListProps> = (props) => {
     }
     fetchPermListByRoleId();
     actionRef.current && actionRef.current.reloadAndRest?.();
-  }, [id]);
+  }, [ id ]);
 
   const treeDataFormat: any = (data: permListType[]) => {
     return data.map((item: permListType) => ({
@@ -83,82 +89,53 @@ const TableAuthForm: React.FC<DetailListProps> = (props) => {
       setCheckedKeys(response.data);
     }
   };
+
   return (
-    <ProCard
-      ghost
-      style={{
-        marginTop: 8,
-        marginLeft: 0,
-        marginRight: '0',
-        padding: '0 12px',
-      }}
-      gutter={[0]}
-      wrap
-      title="授权"
-    >
-      <ProCard
-        
-        layout="default"
-        ghost
-        colSpan={24}
-        style={{
-          marginTop: 8,
-          marginLeft: 0,
-          marginRight: '0px',
-          height: 'calc(100vh - 240px)',
-          minHeight: '500px',
-          marginBottom: '20px',
-          overflow: 'auto',
-        }}
-        bordered
+    <Spin spinning={ loading }>
+      <PageHeader
+        className="qm-role-menu-header"
+        title="授权"
+
+        extra={ [ <Button disabled={ id === null } type="primary" onClick={ () => {
+          setLoading(true)
+          if (id !== null) RoleBindMenu({ permIds: checkedKeys, roleId: id }).then(() => setLoading(false)).catch(() => setLoading(false))
+          else setLoading(false)
+        } }>
+          保存
+        </Button>
+        ] }
+        style={ { margin: 0, padding: 10 } }
       >
-        <Tree
-          checkable
-          disabled={id === null}
-          expandedKeys={expandedKeys}
-          style={{ justifyContent: 'left' }}
-          treeData={permListByRoleId}
-          onCheck={onCheck}
-          onExpand={onExpand}
-          checkedKeys={checkedKeys}
-          onSelect={onSelect}
-          selectedKeys={selectedKeys}
-        />
-      </ProCard>
-    </ProCard>
-    // <ProTable<UserListDataType>
-    //   toolBarRender={ () => [ <Button
-    //     type="primary"
-    //     onClick={ () => {
-    //       // handleModalVisible(true);
-    //       // setCurrentRow(undefined);
-    //     } }
-    //   >
-    //     保存
-    //   </Button> ] }
-    //   actionRef={ actionRef }
-    //   bordered={ true }
-    //   columns={ columns }
-    //   request={ async () => {
-    //     const response = await fetchPermListByRoleId();
-    //     if (!response) return;
-    //     return response;
-    //   } }
-    //   headerTitle="权限"
-    //   // dataSource={userListByRoleId}
-    //   options={
-    //     {
-    //       reload: false,
-    //       density: false,
-    //       fullScreen: false,
-    //       setting: false,
-    //     }
-    //   }
-    //   pagination={ false }
-    //   style={ { height: 'calc(100vh - 140px)', minHeight: "500px", } }
-    //   rowKey="key"
-    //   search={ false }
-    // />
+        <div className="qm-role-table-title">菜单列表</div>
+        <ProCard
+          layout="default"
+          ghost
+          colSpan={ 24 }
+          style={ {
+            marginLeft: 0,
+            marginRight: '0px',
+            height: 'calc(100vh - 230px)',
+            minHeight: '500px',
+            marginBottom: '20px',
+            overflow: 'auto',
+          } }
+          bordered
+        >
+          <Tree
+            checkable
+            disabled={ id === null }
+            expandedKeys={ expandedKeys }
+            style={ { justifyContent: 'left' } }
+            treeData={ permListByRoleId }
+            onCheck={ onCheck }
+            onExpand={ onExpand }
+            checkedKeys={ checkedKeys }
+            onSelect={ onSelect }
+            selectedKeys={ selectedKeys }
+          />
+        </ProCard>
+      </PageHeader>
+    </Spin>
   );
 };
 

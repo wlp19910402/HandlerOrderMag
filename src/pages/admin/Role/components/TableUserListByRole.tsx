@@ -1,5 +1,5 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
+import { Button, PageHeader } from 'antd';
 import React, { useRef, useEffect } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
@@ -26,7 +26,7 @@ const TableUserListByRole: React.FC<DetailListProps> = (props) => {
   ];
   useEffect(() => {
     actionRef.current && actionRef.current.reloadAndRest?.();
-  }, [id]);
+  }, [ id ]);
 
   const fetchUserListByRoleId = async (params: any) => {
     if (id === null) return { data: [] };
@@ -36,33 +36,40 @@ const TableUserListByRole: React.FC<DetailListProps> = (props) => {
     return { ...data, data: data.records };
   };
   return (
-    <ProTable<UserListDataType>
-      toolBarRender={() => []}
-      actionRef={actionRef}
-      bordered={true}
-      columns={columns}
-      request={async (params, sorter, filter) => {
-        const response = await fetchUserListByRoleId({ ...params, sorter, filter });
-        if (!response) return;
-        return response;
-      }}
-      options={{
-        reload: false,
-        density: false,
-        fullScreen: false,
-        setting: false,
-      }}
-      style={{ marginTop: '16px ' }}
-      headerTitle="人员"
-      pagination={{
-        pageSize: 10,
-        simple: true,
-        style: { justifyContent: 'center' },
-        hideOnSinglePage: true,
-      }}
-      rowKey="id"
-      search={false}
-    />
+    <PageHeader
+      className="qm-role-menu-header"
+      title="人员"
+      style={ { margin: 0, padding: 10 } }
+    >
+      <ProTable<UserListDataType>
+        className="qm-role-table"
+        size="small"
+        actionRef={ actionRef }
+        bordered={ true }
+        columns={ columns }
+        request={ async (params, sorter, filter) => {
+          const response = await fetchUserListByRoleId({ ...params, sorter, filter });
+          if (!response) return;
+          return response;
+        } }
+        options={ {
+          reload: false,
+          density: false,
+          fullScreen: false,
+          setting: false,
+        } }
+        style={ { marginTop: '-2px' } }
+        toolBarRender={ false }
+        pagination={ {
+          pageSize: 10,
+          simple: true,
+          style: { justifyContent: 'center' },
+          hideOnSinglePage: true,
+        } }
+        rowKey="id"
+        search={ false }
+      />
+    </PageHeader>
   );
 };
 

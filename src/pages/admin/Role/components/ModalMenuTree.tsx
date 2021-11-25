@@ -21,7 +21,7 @@ type ModalTreeDataProps = {
   dispatch: Dispatch;
 }
 export type SaveRoleParamsType = {
-  menuIds: number[];
+  permIds: number[];
   roleId: number;
 }
 const ModalTreeForm: React.FC<ModalTreeDataProps> = (props) => {

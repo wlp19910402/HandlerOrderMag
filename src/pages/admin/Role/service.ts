@@ -1,13 +1,16 @@
 import type { RoleDataType } from './data.d';
 import API from '@/services/API.d'
-import type { SaveRoleParamsType } from './components/ModalMenuTree'
+import type { SaveRoleParamsType } from './components/TableAuthForm'
 import httpServer from '@/utils/httpServer'
 
 // 当前用户网点列表
 export const queryCurUserSiteList = async () => {
   return await httpServer.get(API.CUR_USER_SITE_LIST);
 }
-
+// 角色绑定
+export const RoleBindMenu = async (params: SaveRoleParamsType) => {
+  return await httpServer.post(API.ROLE_BIND, { data: params })
+}
 // 角色列表
 export const queryRoleList = async () => {
   return await httpServer.get(API.ROLE_LIST);
@@ -25,10 +28,7 @@ export const createRole = async (params: RoleDataType) => {
 export const deleteRole = async (id: number) => {
   return await httpServer.get(`${API.ROLE_DELETE}/${id}`)
 }
-// 角色绑定
-export const BindRole = async (params: SaveRoleParamsType) => {
-  return await httpServer.post(API.ROLE_BIND, { data: params })
-}
+
 // 绑定权限回显
 export const getRoleDetail = async (id: string) => {
   return await httpServer.get(`${API.ROLE_INFO}/${id}`)
