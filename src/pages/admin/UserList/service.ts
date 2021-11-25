@@ -23,6 +23,9 @@ export const queryUserList = async (params: UserSearchType) => {
 export const queryPermByRoleId = async (params: any) => {
   return await httpServer.get(API.PERM_LIST_BY_ROLE + '/' + params.roleId);
 };
+export const queryPermAllData = async () => {
+  return await httpServer.get(API.GET_PERM_LIST_ALL);
+};
 //根据角色查询用户列表
 export const queryUserByRoleId = async (params: any) => {
   return await httpServer.get(API.USER_LIST_BY_ROLE, {
@@ -54,7 +57,7 @@ export const editUserPassword = async (params: any) => {
   return httpServer.post(API.USER_EDIT_PWD, { data: params });
 };
 // 授权信息添加 修改用户角色
-export async function saveUserAuthority (params: UserAuthorityType) {
+export async function saveUserAuthority(params: UserAuthorityType) {
   // return httpServer.post(API.USER_AUTHORITY, { data: params });
   return httpServer.post(API.USER_BIND_ROLE_EDIT, { data: params });
 }
