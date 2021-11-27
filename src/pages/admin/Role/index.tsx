@@ -86,6 +86,7 @@ const RoleList: React.FC<RoleListProps> = (props) => {
       extra={[
         <Button
           type="primary"
+          key="1"
           onClick={() => {
             handleModalVisible(true);
             setCurrentRow(undefined);

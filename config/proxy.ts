@@ -10,19 +10,22 @@ export default {
     '/api/': {
       // target: 'https://127.0.0.1:8000',
       target: 'http://lingyun.labsmart.cn/api/',
+
       changeOrigin: true,
       pathRewrite: { '^/api': '' },
     },
     '/uploadAliyuncs': {
-      target: "https://liyunboji-pub.oss-cn-beijing.aliyuncs.com",
+      target: 'https://liyunboji-pub.oss-cn-beijing.aliyuncs.com',
       changeOrigin: true,
       pathRewrite: { '^/uploadAliyuncs': '' },
     },
     '/handler/': {
-      // target: 'http://192.168.16.103:8888/',//童本地
-      target: 'http://manager-api.dev.echobing.com',
+      target: 'http://192.168.16.103:8888/', //童本地
+      //swigger http://192.168.16.103:8888/doc.html#/
+      //target: 'http://manager-api.dev.echobing.com',
+      //swigger  https://web-server-api.dev.test.echobing.com/doc.html
       changeOrigin: true,
       pathRewrite: { '^/handler/': '/' },
-    }
-  }
+    },
+  },
 };

@@ -86,6 +86,7 @@ const TableAuthForm: React.FC<DetailListProps> = (props) => {
           <Button
             disabled={id === null}
             type="primary"
+            key="1"
             onClick={() => {
               setLoading(true);
               if (id !== null)

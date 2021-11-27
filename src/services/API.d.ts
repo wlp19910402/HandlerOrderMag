@@ -20,6 +20,13 @@ export default {
   ROLE_CREATE: '/handler/sys/role/add', //角色创建
   ROLE_DELETE: '/handler/sys/role/delete', //del/{id}
   ROLE_BIND: '/handler/sys/role/bind',
+
+  //字典接口
+  DIC_LIST_BY_TYPE: '/handler/sys/dic/list', //{type}字典的类型
+  DIC_SAVE: '/handler/sys/dic/save', //保存字典
+  DIC_UPDATE_STATUS: '/handler/sys/dic/update/status', //修改字典的状态
+  DIC_LIST_BY_PARENT_ID: '/handler/sys/dic/children', //{parentId}根据父级的id查询字典列表
+  DIC_DELETE_BY_ID: '/handler/sys/dic/delete', //删除字典
   // 用户管理接口
   // USER_LOGIN: '/api/sys/login',
   // USER_CURRENT: "/api/user/current",
@@ -35,7 +42,6 @@ export default {
   USER_EDIT_PWD: '/api/user/edit-pwd', //修改密码
   // 角色管理接口
   // ROLE_USERID_CHECKID: '/api/sys/role/list', // 角色列表标记指定用户拥有的权限/sys/role/list/{userId}
-
 
   ROLE_GET_MENU: '/api/sys/role/menu', // 绑定权限回显/sys/role/menu/{id}
   ROLE_INFO: '/api/sys/role/detail', /// sys/role/detail/{id}
