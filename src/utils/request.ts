@@ -5,7 +5,7 @@
 import type { RequestInterceptor, OnionOptions } from 'umi-request';
 import { extend } from 'umi-request';
 import { notification } from 'antd';
-import localforage from 'localforage'
+import localforage from 'localforage';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -51,22 +51,23 @@ const errorHandler = (error: { response: Response }): Response => {
 const request = extend({
   errorHandler, // 默认错误处理
   credentials: 'include', // 默认请求是否带上cookie
-})
-request.interceptors.request.use(async (url: RequestInterceptor, options: OnionOptions | undefined) => {
-  const token = await localforage.getItem('token');
-  return (
-    {
+});
+request.interceptors.request.use(
+  async (url: RequestInterceptor, options: OnionOptions | undefined) => {
+    const token = await localforage.getItem('token');
+    console.log('token', token);
+    return {
       url,
       options: {
         ...options,
         headers: {
           ...options?.headers,
-          token: token || ''
-        }
-      }
-    }
-  )
-})
+          token: token || '',
+        },
+      },
+    };
+  },
+);
 // request.interceptors.response.use(response => {
 //   // console.log(response, "res")
 //   // console.log("8989")

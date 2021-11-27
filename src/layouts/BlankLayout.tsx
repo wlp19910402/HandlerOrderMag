@@ -12,7 +12,7 @@ type BlankLayout = {
   dispatch: Dispatch;
   // token: string | undefined;
   mobile: string | undefined;
-} & ConnectProps
+} & ConnectProps;
 
 const BlankLayoutCmp: React.FC<BlankLayout> = ({ children, dispatch, mobile }) => {
   useEffect(() => {
@@ -20,20 +20,21 @@ const BlankLayoutCmp: React.FC<BlankLayout> = ({ children, dispatch, mobile }) =
       dispatch({
         type: 'user/fetchCurrent',
         callback: (res: boolean) => {
-          // console.log(1111, res)
-          res && dispatch({
-            type: 'menu/fetctCurrentMenu'
-          })
-          !res && dispatch({
-            type: 'user/logout'
-          })
-        }
+          res &&
+            dispatch({
+              type: 'menu/fetctCurrentMenu',
+            });
+          !res &&
+            dispatch({
+              type: 'user/logout',
+            });
+        },
       });
     }
   }, []);
-  return <InspectorWrapper>{children}</InspectorWrapper>
+  return <InspectorWrapper>{children}</InspectorWrapper>;
 };
 
 export default connect(({ user }: ConnectState) => ({
-  mobile: user.currentUser?.mobile
-}))(BlankLayoutCmp)
+  mobile: user.currentUser?.mobile,
+}))(BlankLayoutCmp);

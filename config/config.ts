@@ -2,16 +2,16 @@ import { defineConfig } from 'umi';
 import defaultSettings from './defaultSettings';
 import proxy from './proxy';
 import routes from './routes';
-const path = require("path");
+const path = require('path');
 const { REACT_APP_ENV } = process.env;
 
 export default defineConfig({
   alias: {
-    '@': path.resolve(__dirname, "src"),
+    '@': path.resolve(__dirname, 'src'),
   },
   devServer: {
     headers: {
-      'Access-Control-Allow-Origin': '*'
+      'Access-Control-Allow-Origin': '*',
     },
   },
   hash: true,
@@ -24,7 +24,7 @@ export default defineConfig({
   // // 如果需要针对生产环境生效，这么配
   // // mfsu: { production: { output: '.mfsu-production' } },
   history: {
-    type: "hash",
+    type: 'hash',
   },
   // chunks: [ 'vendors', 'umi' ],
   // chainWebpack: function (config, { webpack }) {
@@ -61,18 +61,18 @@ export default defineConfig({
   },
   routes,
   theme: {
-    'primary-color': defaultSettings.primaryColor,
+    'primary-color': '#1890ff',
   },
   title: false,
   ignoreMomentLocale: true,
-  proxy: proxy[ REACT_APP_ENV || 'dev' ],
-  publicPath: "./",
+  proxy: proxy[REACT_APP_ENV || 'dev'],
+  publicPath: './',
   manifest: {
     basePath: './',
     publicPath: './',
   },
   esbuild: {},
-  plugins: [ 'react-dev-inspector/plugins/umi/react-inspector' ],
+  plugins: ['react-dev-inspector/plugins/umi/react-inspector'],
   inspectorConfig: {
     exclude: [],
     babelPlugins: [],
