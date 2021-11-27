@@ -5,7 +5,7 @@ import {
   DeleteOutlined,
 } from '@ant-design/icons';
 import { Popconfirm, Tooltip, Divider, Input } from 'antd';
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { queryDicListByParentId } from '../service';
@@ -27,11 +27,16 @@ type DicListProps = {
 const TableBarnd: React.FC<DicListProps> = (props) => {
   const { id, tiggerSaveDic, tiggerUpdateDicStatus, tiggerDeleteDic } = props;
   const actionRef = useRef<ActionType>();
+  const [addInputLen, setAddInputLen] = useState<number>(0);
   const columns: ProColumns<DicDataType>[] | undefined = [
     {
       title: '产品型号',
       dataIndex: 'name',
       key: 'name',
+      render: (val, record) => {
+        if (record.status === 0) return val;
+        else return <span style={{ opacity: 0.5 }}>{val}</span>;
+      },
     },
     {
       title: '操作',
@@ -56,17 +61,14 @@ const TableBarnd: React.FC<DicListProps> = (props) => {
             </>
           )}
           <Tooltip title={record.status === 1 ? '启用' : '禁用'} key="delete">
-            <Popconfirm
-              title={'确定要' + (record.status === 1 ? '启用' : '禁用')}
-              onConfirm={() => {
+            <a
+              onClick={() => {
                 record.id !== undefined && tiggerUpdateDicStatus(record.id, actionRef);
               }}
             >
-              <a>
-                {record.status === 1 && <CheckCircleOutlined className="qm-table-icon" />}
-                {record.status === 0 && <MinusCircleOutlined className="qm-table-icon" />}
-              </a>
-            </Popconfirm>
+              {record.status === 1 && <CheckCircleOutlined className="qm-table-icon" />}
+              {record.status === 0 && <MinusCircleOutlined className="qm-table-icon" />}
+            </a>
           </Tooltip>
           {record.status === 1 && (
             <>
@@ -142,11 +144,14 @@ const TableBarnd: React.FC<DicListProps> = (props) => {
       {id !== null && (
         <Input.Search
           placeholder="请输入品类名称"
-          allowClear
           enterButton="添加"
-          suffix={'0/10'}
+          className="qm-add-suffix "
+          suffix={addInputLen + '/10'}
           style={{ marginTop: '10px' }}
           maxLength={10}
+          onChange={(event) => {
+            setAddInputLen(event.target.value.length);
+          }}
           onSearch={(val, event) => {
             tiggerSaveDic(
               {

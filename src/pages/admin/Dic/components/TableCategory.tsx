@@ -5,7 +5,7 @@ import {
   DeleteOutlined,
 } from '@ant-design/icons';
 import { Popconfirm, Tooltip, Divider, Input } from 'antd';
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { queryDicListByType } from '../service';
@@ -28,11 +28,16 @@ type DicListProps = {
 const TableCategory: React.FC<DicListProps> = (props) => {
   const { id, onChangeId, tiggerSaveDic, tiggerUpdateDicStatus, tiggerDeleteDic } = props;
   const actionRef = useRef<ActionType>();
+  const [addInputLen, setAddInputLen] = useState<number>(0);
   const columns: ProColumns<DicDataType>[] | undefined = [
     {
       title: '类型名称',
       dataIndex: 'name',
       key: 'name',
+      render: (val, record) => {
+        if (record.status === 0) return val;
+        else return <span style={{ opacity: 0.5 }}>{val}</span>;
+      },
     },
     {
       title: '操作',
@@ -57,17 +62,14 @@ const TableCategory: React.FC<DicListProps> = (props) => {
             </>
           )}
           <Tooltip title={record.status === 1 ? '启用' : '禁用'} key="delete">
-            <Popconfirm
-              title={'确定要' + (record.status === 1 ? '启用' : '禁用')}
-              onConfirm={() => {
+            <a
+              onClick={() => {
                 record.id !== undefined && tiggerUpdateDicStatus(record.id, actionRef);
               }}
             >
-              <a>
-                {record.status === 1 && <CheckCircleOutlined className="qm-table-icon" />}
-                {record.status === 0 && <MinusCircleOutlined className="qm-table-icon" />}
-              </a>
-            </Popconfirm>
+              {record.status === 1 && <CheckCircleOutlined className="qm-table-icon" />}
+              {record.status === 0 && <MinusCircleOutlined className="qm-table-icon" />}
+            </a>
           </Tooltip>
           {record.status === 1 && (
             <>
@@ -102,7 +104,7 @@ const TableCategory: React.FC<DicListProps> = (props) => {
             return [defaultDom.save, defaultDom.cancel];
           },
           onSave: async (id: any, record: DicDataType) => {
-            tiggerSaveDic(record, actionRef);
+            await tiggerSaveDic(record, actionRef);
           },
         }}
         rowClassName={(record: DicDataType) => {
@@ -142,13 +144,17 @@ const TableCategory: React.FC<DicListProps> = (props) => {
         columns={columns}
         rowSelection={false}
       />
+
       <Input.Search
         placeholder="请输入品类名称"
-        allowClear
         enterButton="添加"
-        suffix={'0/10'}
+        className="qm-add-suffix "
+        suffix={addInputLen + '/10'}
         style={{ marginTop: '10px' }}
         maxLength={10}
+        onChange={(event) => {
+          setAddInputLen(event.target.value.length);
+        }}
         onSearch={(val, event) => {
           tiggerSaveDic(
             {
@@ -158,7 +164,6 @@ const TableCategory: React.FC<DicListProps> = (props) => {
             },
             actionRef,
           );
-          event?.cancelable;
         }}
       />
     </div>
