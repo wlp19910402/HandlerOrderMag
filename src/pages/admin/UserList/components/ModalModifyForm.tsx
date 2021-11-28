@@ -45,108 +45,57 @@ const ModalModifyForm: React.FC<ModalModifyFormDataProps> = (props) => {
   };
   return (
     <ModalForm
-      modalProps={ {
+      modalProps={{
         maskClosable: false,
         okText: '邀请',
-      } }
-      title={ currentRow?.id !== undefined ? '用户编辑' : '邀请人员' }
+      }}
+      title={currentRow?.id !== undefined ? '用户编辑' : '邀请人员'}
       width="640px"
-      visible={ createModalVisible }
-      onVisibleChange={ handleModalVisible }
-      onFinish={ async (value) => {
+      visible={createModalVisible}
+      onVisibleChange={handleModalVisible}
+      onFinish={async (value) => {
         const bodyVaule: EditUserDataType = {
           mobile: value.mobile,
           roleIds: value.roleIds,
-          siteList: value.siteIds
+          siteList: value.siteIds,
         };
         await submitForm(bodyVaule);
-      } }
-      labelCol={ { span: 5 } }
+      }}
+      labelCol={{ span: 5 }}
       layout="horizontal"
     >
-      {/* <ProFormText
-        rules={[
-          {
-            required: true,
-            message: '请输入用户名！',
-          },
-        ]}
-        label="用户名"
-        name={currentRow?.id !== undefined ? 'oldUsername' : 'username'}
-        placeholder="请输入用户名"
-        disabled={currentRow?.id !== undefined}
-        initialValue={currentRow?.username}
-      /> */}
-      {/* <ProFormText
-        rules={[
-          {
-            required: true,
-            message: '请输入姓名！',
-          },
-        ]}
-        label="姓名"
-        name="realname"
-        placeholder="请输入姓名"
-        initialValue={currentRow?.realname}
-      /> */}
-      {/* {currentRow?.id === undefined && (
-        <ProFormText.Password
-          rules={[
-            {
-              required: true,
-              message: '请输入密码！',
-            },
-          ]}
-          label="密码"
-          name="password"
-          placeholder="请输入密码"
-        />
-      )} */}
       <ProFormText
-        rules={ [
+        rules={[
           { required: true, message: '请输入手机号！' },
           { pattern: /^1\d{10}$/, message: '请输入正确的手机号' },
-        ] }
+        ]}
         label="手机号"
         name="mobile"
         placeholder="请输入手机号"
-        initialValue={ currentRow?.mobile }
+        initialValue={currentRow?.mobile}
       />
-      {/* <ProFormText
-        rules={[
-          {
-            required: true,
-            message: '请输入邮箱！',
-          },
-        ]}
-        label="邮箱"
-        name="email"
-        placeholder="请输入邮箱"
-        initialValue={currentRow?.email}
-      /> */}
-      { roleData && roleData.length > 0 && (
+      {roleData && roleData.length > 0 && (
         <ProFormCheckbox.Group
-          name={ currentRow?.id !== undefined ? 'oldRoleIds' : 'roleIds' }
+          name={currentRow?.id !== undefined ? 'oldRoleIds' : 'roleIds'}
           layout="horizontal"
           label="角色"
-          options={ roleData }
-          disabled={ currentRow?.id !== undefined }
-          initialValue={ initialRoleIds }
-          rules={ [ { required: true, message: '必填项哦' } ] }
+          options={roleData}
+          disabled={currentRow?.id !== undefined}
+          initialValue={initialRoleIds}
+          rules={[{ required: true, message: '必填项哦' }]}
         />
-      ) }
-      { siteData && siteData.length > 0 && (
+      )}
+      {siteData && siteData.length > 0 && (
         <ProFormCheckbox.Group
-          name={ currentRow?.id !== undefined ? 'oldSiteIds' : 'siteIds' }
+          name={currentRow?.id !== undefined ? 'oldSiteIds' : 'siteIds'}
           layout="horizontal"
           label="网点"
-          options={ siteData }
-          disabled={ currentRow?.id !== undefined }
-          initialValue={ initialRoleIds }
-          rules={ [ { required: true, message: '必填项哦' } ] }
+          options={siteData}
+          disabled={currentRow?.id !== undefined}
+          initialValue={initialRoleIds}
+          rules={[{ required: true, message: '必填项哦' }]}
         />
-      ) }
-
+      )}
     </ModalForm>
   );
 };

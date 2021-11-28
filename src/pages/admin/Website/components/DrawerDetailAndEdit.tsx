@@ -15,13 +15,12 @@ const layout = {
   labelCol: { span: 6 },
   wrapperCol: { span: 16 },
 };
+
 const { TabPane } = Tabs;
 const DrawerDetailAndEdit: React.FC<DrawerDetailAndEditDataProps> = (props) => {
   const { currentRow, actionRef } = props;
-  const [address, setAddress] = useState(currentRow?.address);
   const onSaveWebsiteInfo = async (values: any) => {
-    console.log({ id: currentRow?.id, ...values, address });
-    let response = await saveWebsite({ id: currentRow?.id, ...values, address });
+    let response = await saveWebsite({ id: currentRow?.id, ...values });
     if (!response) return;
     actionRef.current && actionRef.current.reload();
     message.success(`${currentRow?.id !== undefined ? '修改' : '添加'}成功`);
@@ -32,17 +31,17 @@ const DrawerDetailAndEdit: React.FC<DrawerDetailAndEditDataProps> = (props) => {
   return (
     <Tabs defaultActiveKey="1" type="card" size={'small'}>
       <TabPane tab="签约管理" key="1" style={{ overflowY: 'auto', height: 'calc(100vh - 100px)' }}>
-        Content of card tab 1
+        签约管理 1
       </TabPane>
       <TabPane tab="服务授权" key="2" style={{ overflowY: 'auto', height: 'calc(100vh - 100px)' }}>
-        Content of card tab 2
+        服务授权 2
       </TabPane>
       <TabPane tab="网点信息" key="3" style={{ overflowY: 'auto', height: 'calc(100vh - 100px)' }}>
         <Form
           {...layout}
           name="nest-messages"
           onFinish={onSaveWebsiteInfo}
-          style={{ marginTop: '60px' }}
+          style={{ marginTop: '30px' }}
           validateMessages={validateMessages}
         >
           <Form.Item
@@ -78,15 +77,14 @@ const DrawerDetailAndEdit: React.FC<DrawerDetailAndEditDataProps> = (props) => {
           <Form.Item label="区域">
             <Input disabled={true} value={currentRow?.districtName} />
           </Form.Item>
-          <Form.Item label="详细地址" rules={[{ required: true }]}>
-            <Input.TextArea
-              value={address}
-              onChange={(val) => {
-                setAddress(val.target.value);
-              }}
-            />
+          <Form.Item
+            name="address"
+            label="详细地址"
+            initialValue={currentRow?.address}
+            rules={[{ required: true }]}
+          >
+            <Input.TextArea />
           </Form.Item>
-
           <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 6 }}>
             <Button type="primary" htmlType="submit">
               保存

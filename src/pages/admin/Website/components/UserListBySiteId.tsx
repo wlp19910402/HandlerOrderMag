@@ -3,14 +3,7 @@ import React, { useRef } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import { queryUserListBySiteId } from '../service';
-export type RoleCheckBoxDataType = {
-  label: string;
-  value: number;
-};
-export type SiteCheckBoxDataType = {
-  label: string;
-  value: number;
-};
+
 type UserListBySiteIdType = {
   siteId: number;
 };

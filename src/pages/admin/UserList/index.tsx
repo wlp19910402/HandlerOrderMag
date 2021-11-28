@@ -1,25 +1,16 @@
-import {
-  PlusOutlined,
-  EditOutlined,
-  DeleteOutlined,
-  UserSwitchOutlined,
-  LockOutlined,
-  UserDeleteOutlined,
-} from '@ant-design/icons';
-import { Button, Drawer, message, Popconfirm, Switch, Tooltip, Tag, Select, Divider } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { Button, Drawer, message, Popconfirm, Tag, Select, Divider } from 'antd';
 import React, { useState, useRef, useEffect } from 'react';
-import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
+import { PageContainer } from '@ant-design/pro-layout';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
 import type { ProDescriptionsItemProps } from '@ant-design/pro-descriptions';
 import ProDescriptions from '@ant-design/pro-descriptions';
-import { queryUserList, deleteUser, statusUser, getUserRoleId } from './service';
-import type { UserListDataType, searchBindFlag } from '../data.d';
+import { queryUserList, deleteUser, statusUser } from './service';
+import type { UserListDataType } from '../data.d';
 import ModalModifyForm from './components/ModalModifyForm';
 import { queryRoleList, queryCurUserSiteList } from '@/pages/admin/Role/service';
 import ModalAuthifyForm from './components/ModalAuthifyForm';
-// import ModalModifyPasswordForm from './components/ModalModifyPasswordForm';
-// const { Option } = Select;
 export type RoleCheckBoxDataType = {
   label: string;
   value: number;
@@ -32,9 +23,7 @@ const ResumeList: React.FC<UserListDataType> = () => {
   const [showDetail, setShowDetail] = useState<boolean>(false);
   const actionRef = useRef<ActionType>();
   const [currentRow, setCurrentRow] = useState<UserListDataType>();
-  const [selectedRowsState, setSelectedRows] = useState<UserListDataType[]>([]);
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
-  const [createModalPasswordVisible, handleModalPasswordVisible] = useState<boolean>(false);
   const [modalAuthifyVisible, handleModalAuthifyVisible] = useState<boolean>(false);
   const [roleData, setRoleData] = useState<RoleCheckBoxDataType[] | undefined>();
   const [siteData, setSiteData] = useState<SiteCheckBoxDataType[] | undefined>();
@@ -43,7 +32,6 @@ const ResumeList: React.FC<UserListDataType> = () => {
     {
       title: '手机号',
       dataIndex: 'mobile',
-      // hideInSearch: true,
       width: 120,
       tip: '规则名称是唯一的 key',
       valueType: 'textarea',
@@ -248,10 +236,6 @@ const ResumeList: React.FC<UserListDataType> = () => {
     <PageContainer header={{ title: '' }}>
       <ProTable
         bordered={true}
-        // scroll={{ x: true }}
-        //    & {
-        //     scrollToFirstRowOnChange?: boolean;
-        // };
         scroll={{ x: 800 }}
         size="small"
         headerTitle="查询表格"
@@ -279,9 +263,6 @@ const ResumeList: React.FC<UserListDataType> = () => {
           await fetchQueryUserList({ ...params, sorter, filter })
         }
         columns={columns}
-        // rowSelection={ {
-        //   onChange: (_, selectedRows: any) => setSelectedRows(selectedRows),
-        // } }
         rowSelection={false}
       />
       {createModalVisible && (
@@ -296,15 +277,7 @@ const ResumeList: React.FC<UserListDataType> = () => {
           setShowDetail={setShowDetail}
         />
       )}
-      {/* {createModalPasswordVisible && currentRow && (
-        <ModalModifyPasswordForm
-          createModalVisible={createModalPasswordVisible}
-          handleModalVisible={handleModalPasswordVisible}
-          actionRef={actionRef}
-          currentRow={currentRow}
-          setShowDetail={setShowDetail}
-        />
-      )} */}
+
       {modalAuthifyVisible && (
         <ModalAuthifyForm
           modalAuthifyVisible={modalAuthifyVisible}

@@ -367,7 +367,7 @@ const ResumeList: React.FC<SiteDataType> = () => {
       )}
 
       <Drawer
-        width={'80%'}
+        width={'70%'}
         visible={showDetail}
         onClose={() => {
           setCurrentRow(undefined);

@@ -1,14 +1,13 @@
 /**
  * 编辑或新增网点
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import type { ActionType } from '@ant-design/pro-table';
 import { ModalForm, ProFormText, ProFormTextArea } from '@ant-design/pro-form';
 import { getAreaData, saveWebsite } from '../service';
 import type { SiteDataType, SiteSaveParams } from '../data';
 import type { RoleCheckBoxDataType, SiteCheckBoxDataType, selectLableType } from '../index';
 import { message, Select, Form } from 'antd';
-// import { Form } from '_antd@4.17.1@antd';
 
 type ModalModifyFormDataProps = {
   createModalVisible: boolean;
@@ -33,13 +32,7 @@ const ModalModifyForm: React.FC<ModalModifyFormDataProps> = (props) => {
   const [areaNameField, setAreaNameField] = useState<AreaNameFieldType>();
   const [districtData, setDistrictData] = useState<selectLableType[]>([]);
   const [districtVal, setDistrictVal] = useState<string | undefined>(currentRow?.districtCode);
-  useEffect(() => {
-    if (currentRow?.provinceCode && currentRow?.cityCode) {
-      console.log(currentRow, 'currentRow');
-      fetchGetCityData(currentRow?.provinceCode);
-      fetchGetDistrictData(currentRow?.cityCode);
-    }
-  }, []);
+
   const submitForm = async (value: SiteSaveParams) => {
     let response;
     if (currentRow?.id !== undefined) {
