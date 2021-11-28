@@ -55,7 +55,7 @@ const request = extend({
 request.interceptors.request.use(
   async (url: RequestInterceptor, options: OnionOptions | undefined) => {
     const token = await localforage.getItem('token');
-    console.log('token', token);
+    // console.log('token', token);
     return {
       url,
       options: {

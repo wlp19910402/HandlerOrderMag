@@ -8,7 +8,6 @@ import { Popconfirm, Tooltip, Divider, Input } from 'antd';
 import React, { useRef, useState } from 'react';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import { queryDicListByType } from '../service';
 import type { DicDataType } from '../data';
 import styles from '../styles.less';
 type DicListProps = {
@@ -23,10 +22,18 @@ type DicListProps = {
     actionRef: React.MutableRefObject<ActionType | undefined>,
   ) => void;
   tiggerDeleteDic: (id: number, actionRef: React.MutableRefObject<ActionType | undefined>) => void;
+  fetchQueryDicListByPage: (params: any) => Promise<any>;
 };
 
 const TableCategory: React.FC<DicListProps> = (props) => {
-  const { id, onChangeId, tiggerSaveDic, tiggerUpdateDicStatus, tiggerDeleteDic } = props;
+  const {
+    id,
+    onChangeId,
+    tiggerSaveDic,
+    tiggerUpdateDicStatus,
+    tiggerDeleteDic,
+    fetchQueryDicListByPage,
+  } = props;
   const actionRef = useRef<ActionType>();
   const [addInputLen, setAddInputLen] = useState<number>(0);
   const columns: ProColumns<DicDataType>[] | undefined = [
@@ -129,18 +136,21 @@ const TableCategory: React.FC<DicListProps> = (props) => {
         }}
         search={false}
         pagination={{
-          pageSize: 20,
+          pageSize: 15,
           simple: true,
           style: { justifyContent: 'center' },
           hideOnSinglePage: true,
         }}
         scroll={{ y: 'calc(100vh - 240px)' }}
         toolBarRender={false}
-        request={async (params, sorter, filter) => {
-          const response = await queryDicListByType('category');
-          if (!response) return;
-          return response;
-        }}
+        request={async (params, sorter, filter) =>
+          await fetchQueryDicListByPage({
+            ...params,
+            sorter,
+            filter,
+            type: 'category',
+          })
+        }
         columns={columns}
         rowSelection={false}
       />

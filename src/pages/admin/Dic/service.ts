@@ -1,4 +1,4 @@
-import type { DicDataType } from './data';
+import type { DicDataType, PageDataType } from './data';
 import API from '@/services/API.d';
 import httpServer from '@/utils/httpServer';
 
@@ -17,4 +17,16 @@ export const queryDicListByParentId = async (id: number) => {
 };
 export const deleteDic = async (id: number) => {
   return await httpServer.post(API.DIC_DELETE_BY_ID, { data: { id } });
+};
+// DIC_LIST_BY_PAGE
+export const queryDicListByPage = async (params: any) => {
+  return await httpServer.get(API.DIC_LIST_BY_PAGE, {
+    params: {
+      ...params,
+      // pageSize: params.pageSize,
+      pageNo: params.current,
+
+      // bindFlag: params.bindFlag,
+    },
+  });
 };

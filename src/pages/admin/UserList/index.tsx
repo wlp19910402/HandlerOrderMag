@@ -29,16 +29,16 @@ export type SiteCheckBoxDataType = {
   value: number;
 };
 const ResumeList: React.FC<UserListDataType> = () => {
-  const [ showDetail, setShowDetail ] = useState<boolean>(false);
+  const [showDetail, setShowDetail] = useState<boolean>(false);
   const actionRef = useRef<ActionType>();
-  const [ currentRow, setCurrentRow ] = useState<UserListDataType>();
-  const [ selectedRowsState, setSelectedRows ] = useState<UserListDataType[]>([]);
-  const [ createModalVisible, handleModalVisible ] = useState<boolean>(false);
-  const [ createModalPasswordVisible, handleModalPasswordVisible ] = useState<boolean>(false);
-  const [ modalAuthifyVisible, handleModalAuthifyVisible ] = useState<boolean>(false);
-  const [ roleData, setRoleData ] = useState<RoleCheckBoxDataType[] | undefined>();
-  const [ siteData, setSiteData ] = useState<SiteCheckBoxDataType[] | undefined>();
-  const [ initialRoleIds, setInitialRoleIds ] = useState<number[] | undefined>(undefined);
+  const [currentRow, setCurrentRow] = useState<UserListDataType>();
+  const [selectedRowsState, setSelectedRows] = useState<UserListDataType[]>([]);
+  const [createModalVisible, handleModalVisible] = useState<boolean>(false);
+  const [createModalPasswordVisible, handleModalPasswordVisible] = useState<boolean>(false);
+  const [modalAuthifyVisible, handleModalAuthifyVisible] = useState<boolean>(false);
+  const [roleData, setRoleData] = useState<RoleCheckBoxDataType[] | undefined>();
+  const [siteData, setSiteData] = useState<SiteCheckBoxDataType[] | undefined>();
+  const [initialRoleIds, setInitialRoleIds] = useState<number[] | undefined>(undefined);
   const columns: ProColumns<any>[] = [
     {
       title: '手机号',
@@ -52,12 +52,12 @@ const ResumeList: React.FC<UserListDataType> = () => {
       render: (val, entity) => {
         return (
           <a
-            onClick={ () => {
+            onClick={() => {
               setCurrentRow(entity);
               setShowDetail(true);
-            } }
+            }}
           >
-            { `${val}` }
+            {`${val}`}
           </a>
         );
       },
@@ -91,9 +91,17 @@ const ResumeList: React.FC<UserListDataType> = () => {
       width: 100,
       hideInSearch: true,
       dataIndex: 'accountAuth',
-      valueEnum: {
-        0: { text: '已认证', status: 'Processing' },
-        1: { text: '未认证', status: 'Default' },
+      render: (val) => (val ? '已认证' : '未认证'),
+      renderFormItem: (item, { type, defaultRender, ...rest }, form) => {
+        if (type === 'form') {
+          return null;
+        }
+        return (
+          <Select key="label">
+            <Select.Option value={'true'}>已认证</Select.Option>
+            <Select.Option value={'false'}>未认证</Select.Option>
+          </Select>
+        );
       },
     },
     {
@@ -103,12 +111,12 @@ const ResumeList: React.FC<UserListDataType> = () => {
       render: (val, record) => {
         return (
           <div>
-            { Array.isArray(val) &&
+            {Array.isArray(val) &&
               val.map((item, index) => (
-                <Tag key={ index } color="blue">
-                  { item.name }
+                <Tag key={index} color="blue">
+                  {item.name}
                 </Tag>
-              )) }
+              ))}
           </div>
         );
       },
@@ -116,7 +124,7 @@ const ResumeList: React.FC<UserListDataType> = () => {
         if (type === 'form') {
           return null;
         }
-        return <Select options={ roleData } key="label" />;
+        return <Select options={roleData} key="label" />;
       },
     },
     {
@@ -142,38 +150,36 @@ const ResumeList: React.FC<UserListDataType> = () => {
           []
         ) : (
           <>
-            { record.status == 2 && (
+            {record.status == 2 && (
               <Popconfirm
                 title="是否取消邀请？"
-                onConfirm={ () => {
+                onConfirm={() => {
                   record.id !== undefined && tiggerDeleteUser(record.id?.toString());
-                } }
+                }}
               >
                 <a type="link">取消邀请</a>
               </Popconfirm>
-            ) }
-            { record.status == 0 && (
+            )}
+            {record.status == 0 && (
               <a
                 type="link"
-                onClick={ async () => {
+                onClick={async () => {
                   fetchUserRoleId(record);
-                } }
+                }}
               >
                 修改角色
               </a>
-            ) }
-            { record.status == 0 && <Divider type="vertical" /> }
-            { (record.status === 0 || record.status === 1) && (
+            )}
+            {record.status == 0 && <Divider type="vertical" />}
+            {(record.status === 0 || record.status === 1) && (
               <a
                 type="link"
-                onClick={ async () =>
-                  switchUserStatus(record.id?.toString(), record.status === 0)
-                }
+                onClick={async () => switchUserStatus(record.id?.toString(), record.status === 0)}
               >
-                {/* 修改角色 */ }
-                { record.status === 0 ? '禁用' : '启用' }
+                {/* 修改角色 */}
+                {record.status === 0 ? '禁用' : '启用'}
               </a>
-            ) }
+            )}
           </>
         ),
     },
@@ -202,28 +208,8 @@ const ResumeList: React.FC<UserListDataType> = () => {
       record.id !== undefined &&
       setInitialRoleIds(record?.roleList?.map((item) => item.id));
 
-    // getUserRoleId(record.id?.toString()).then(async (response) => {
-    //   if (!response) return;
-    //   setInitialRoleIds(response.data);
-    // record.
     await fetchRoleListData(), handleModalAuthifyVisible(true);
-
-    // });
   };
-  // const fetchUserEdit = async (record: UserListDataType) => {
-  //   setCurrentRow(record);
-  //   record.id !== undefined &&
-  //     getUserRoleId(record.id?.toString()).then(async (response: any) => {
-  //       if (!response) return;
-  //       setInitialRoleIds(response.data);
-  //       await fetchRoleListData();
-  //       handleModalVisible(true);
-  //     });
-  // };
-  // const fetchUserPasswordEdit = async (record: UserListDataType) => {
-  //   setCurrentRow(record);
-  //   handleModalPasswordVisible(true);
-  // };
   const fetchRoleListData = async () => {
     if (roleData === undefined) {
       const response = await queryRoleList();
@@ -249,68 +235,67 @@ const ResumeList: React.FC<UserListDataType> = () => {
     }
   };
 
-  // const fetchCurUserSiteListData = async () => {
-  //   CUR_USER_SITE_LIST
-  // }
-
   const fetchQueryUserList = async (params: any) => {
-    const response = await queryUserList(params);
+    const response = await queryUserList({
+      ...params,
+      ...(params?.accountAuth && { accountAuth: params?.accountAuth === 'true' ? true : false }),
+    });
     if (!response) return { data: [] };
     const { data } = response;
     return { ...data, data: data.records };
   };
   return (
-    <PageContainer header={ { title: '' } }>
+    <PageContainer header={{ title: '' }}>
       <ProTable
-        bordered={ true }
+        bordered={true}
         // scroll={{ x: true }}
         //    & {
         //     scrollToFirstRowOnChange?: boolean;
         // };
-        scroll={ { x: 800 } }
+        scroll={{ x: 800 }}
         size="small"
         headerTitle="查询表格"
-        actionRef={ actionRef }
+        actionRef={actionRef}
         rowKey="id"
-        pagination={ {
+        pagination={{
           pageSize: 10,
-        } }
-        toolBarRender={ () => [
+        }}
+        toolBarRender={() => [
           <Button
             type="primary"
-            onClick={ async () => {
+            onClick={async () => {
               await fetchSiteListData();
               await fetchRoleListData();
               await setInitialRoleIds([]);
               handleModalVisible(true);
               setCurrentRow(undefined);
-            } }
+            }}
           >
             <PlusOutlined />
             邀请人员
           </Button>,
-        ] }
-        request={ async (params, sorter, filter) =>
+        ]}
+        request={async (params, sorter, filter) =>
           await fetchQueryUserList({ ...params, sorter, filter })
         }
-        columns={ columns }
+        columns={columns}
         // rowSelection={ {
         //   onChange: (_, selectedRows: any) => setSelectedRows(selectedRows),
         // } }
-        rowSelection={ false }
+        rowSelection={false}
       />
-      { createModalVisible && (
+      {createModalVisible && (
         <ModalModifyForm
-          createModalVisible={ createModalVisible }
-          handleModalVisible={ handleModalVisible }
-          actionRef={ actionRef }
-          currentRow={ currentRow }
-          roleData={ roleData }
-          siteData={ siteData }
-          initialRoleIds={ initialRoleIds }
-          setShowDetail={ setShowDetail }
+          createModalVisible={createModalVisible}
+          handleModalVisible={handleModalVisible}
+          actionRef={actionRef}
+          currentRow={currentRow}
+          roleData={roleData}
+          siteData={siteData}
+          initialRoleIds={initialRoleIds}
+          setShowDetail={setShowDetail}
         />
-      ) }
+      )}
       {/* {createModalPasswordVisible && currentRow && (
         <ModalModifyPasswordForm
           createModalVisible={createModalPasswordVisible}
@@ -320,41 +305,41 @@ const ResumeList: React.FC<UserListDataType> = () => {
           setShowDetail={setShowDetail}
         />
       )} */}
-      { modalAuthifyVisible && (
+      {modalAuthifyVisible && (
         <ModalAuthifyForm
-          modalAuthifyVisible={ modalAuthifyVisible }
-          handleModalAuthifyVisible={ handleModalAuthifyVisible }
-          actionRef={ actionRef }
-          currentRow={ currentRow }
-          roleData={ roleData }
-          initialRoleIds={ initialRoleIds }
-          setShowDetail={ setShowDetail }
+          modalAuthifyVisible={modalAuthifyVisible}
+          handleModalAuthifyVisible={handleModalAuthifyVisible}
+          actionRef={actionRef}
+          currentRow={currentRow}
+          roleData={roleData}
+          initialRoleIds={initialRoleIds}
+          setShowDetail={setShowDetail}
         />
-      ) }
+      )}
       <Drawer
-        width={ 600 }
-        visible={ showDetail }
-        onClose={ () => {
+        width={600}
+        visible={showDetail}
+        onClose={() => {
           setCurrentRow(undefined);
           setShowDetail(false);
-        } }
-        closable={ false }
+        }}
+        closable={false}
       >
-        { currentRow?.mobile && (
+        {currentRow?.mobile && (
           <ProDescriptions<UserListDataType>
-            column={ 2 }
-            bordered={ true }
-            title={ currentRow?.username }
-            key={ currentRow?.id }
-            request={ async () => ({
+            column={2}
+            bordered={true}
+            title={currentRow?.username}
+            key={currentRow?.id}
+            request={async () => ({
               data: currentRow || {},
-            }) }
-            params={ {
+            })}
+            params={{
               id: currentRow?.id,
-            } }
-            columns={ columns as ProDescriptionsItemProps<UserListDataType>[] }
+            }}
+            columns={columns as ProDescriptionsItemProps<UserListDataType>[]}
           />
-        ) }
+        )}
       </Drawer>
     </PageContainer>
   );

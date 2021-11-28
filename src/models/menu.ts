@@ -47,6 +47,17 @@ const localMenuList = [
         code: 'sys:role',
       },
       {
+        id: 25,
+        name: '网点管理',
+        parentId: 17,
+        seq: 1,
+        children: [],
+        icon: 'fa fa-user-secret',
+        type: 1,
+        url: '/admin/website',
+        code: 'sys:role',
+      },
+      {
         id: 28,
         name: '权限管理',
         parentId: 17,

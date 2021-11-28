@@ -23,9 +23,11 @@ type DicListProps = {
     actionRef: React.MutableRefObject<ActionType | undefined>,
   ) => void;
   tiggerDeleteDic: (id: number, actionRef: React.MutableRefObject<ActionType | undefined>) => void;
+  fetchQueryDicListByPage: (params: any) => Promise<any>;
 };
 const TableBarnd: React.FC<DicListProps> = (props) => {
-  const { id, tiggerSaveDic, tiggerUpdateDicStatus, tiggerDeleteDic } = props;
+  const { id, tiggerSaveDic, tiggerUpdateDicStatus, tiggerDeleteDic, fetchQueryDicListByPage } =
+    props;
   const actionRef = useRef<ActionType>();
   const [addInputLen, setAddInputLen] = useState<number>(0);
   const columns: ProColumns<DicDataType>[] | undefined = [
@@ -94,12 +96,6 @@ const TableBarnd: React.FC<DicListProps> = (props) => {
   useEffect(() => {
     actionRef.current && actionRef.current.reloadAndRest?.();
   }, [id]);
-  const fetchDicListByParentId = async () => {
-    if (id === null) return;
-    const response: any = await queryDicListByParentId(id);
-    if (!response) return;
-    return response;
-  };
 
   return (
     <div style={{ margin: 0, padding: '12px 10px 2px' }}>
@@ -129,14 +125,22 @@ const TableBarnd: React.FC<DicListProps> = (props) => {
         }}
         search={false}
         pagination={{
-          pageSize: 20,
+          pageSize: 15,
           simple: true,
           style: { justifyContent: 'center' },
           hideOnSinglePage: true,
         }}
         scroll={{ y: 'calc(100vh - 240px)' }}
         toolBarRender={false}
-        request={fetchDicListByParentId}
+        request={async (params, sorter, filter) => {
+          if (id === null) return [];
+          return await fetchQueryDicListByPage({
+            ...params,
+            sorter,
+            filter,
+            parentId: id,
+          });
+        }}
         columns={columns}
         rowSelection={false}
       />

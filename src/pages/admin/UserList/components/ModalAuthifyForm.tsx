@@ -42,7 +42,7 @@ const ModalAuthifyForm: React.FC<ModalAuthifyFormDataProps> = (props) => {
         okText: '保存',
       }}
       title="修改用户角色"
-      width="400px"
+      width="640px"
       visible={modalAuthifyVisible}
       onVisibleChange={handleModalAuthifyVisible}
       onFinish={async (value) => {

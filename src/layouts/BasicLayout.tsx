@@ -88,7 +88,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
     }
   };
   useEffect(() => {
-    console.log('bsicsss');
+    // console.log('bsicsss');
   }, []);
   const authorized = useMemo(
     () =>

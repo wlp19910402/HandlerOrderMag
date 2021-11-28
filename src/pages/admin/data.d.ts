@@ -12,7 +12,7 @@ export type UserListDataType = {
   status?: string;
   username: string;
   status?: number; //0:启用、1:禁用、2:待加入、3:审核中、4:审核成功、5:审核失败
-  accountAuth?: number;
+  accountAuth?: boolean;
   superAdmin?: boolean; //1: 超级管理员 ；0:普通人员
   roleList?: RoleListType[];
 };

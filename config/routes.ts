@@ -58,8 +58,13 @@
                   },
                   {
                     path: '/admin/dic',
-                    name: '系统字典',
+                    name: '产品品类管理',
                     component: './admin/Dic',
+                  },
+                  {
+                    path: '/admin/website',
+                    name: '网点管理',
+                    component: './admin/Website',
                   },
                   {
                     path: '/admin/wxUser',

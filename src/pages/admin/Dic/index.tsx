@@ -3,7 +3,7 @@ import ProCard from '@ant-design/pro-card';
 import TableBarnd from './components/TableBarnd';
 import TableModel from './components/TableModel';
 import TableCategory from './components/TableCategory';
-import { updateDicStatus, saveDic, deleteDic } from './service';
+import { updateDicStatus, saveDic, deleteDic, queryDicListByPage } from './service';
 import type { ActionType } from '@ant-design/pro-table';
 import type { DicDataType } from './data';
 import { message } from 'antd';
@@ -37,6 +37,12 @@ const RoleManageCmp: React.FC = () => {
     actionRef.current && actionRef.current.reloadAndRest?.();
     message.success('删除成功');
   };
+  const fetchQueryDicListByPage = async (params: any) => {
+    const response = await queryDicListByPage(params);
+    if (!response) return { data: [] };
+    const { data } = response;
+    return { ...data, data: data.records };
+  };
   return (
     <ProCard split="vertical">
       <ProCard colSpan={8} ghost bodyStyle={{ padding: '0 0 10px ' }}>
@@ -46,6 +52,7 @@ const RoleManageCmp: React.FC = () => {
           tiggerSaveDic={tiggerSaveDic}
           tiggerUpdateDicStatus={tiggerUpdateDicStatus}
           tiggerDeleteDic={tiggerDeleteDic}
+          fetchQueryDicListByPage={fetchQueryDicListByPage}
         />
       </ProCard>
       <ProCard colSpan={8} ghost style={{ justifyContent: 'left' }}>
@@ -56,6 +63,7 @@ const RoleManageCmp: React.FC = () => {
           tiggerSaveDic={tiggerSaveDic}
           tiggerUpdateDicStatus={tiggerUpdateDicStatus}
           tiggerDeleteDic={tiggerDeleteDic}
+          fetchQueryDicListByPage={fetchQueryDicListByPage}
         />
       </ProCard>
       <ProCard colSpan={8} ghost bodyStyle={{ padding: '0 0 10px ' }}>
@@ -64,6 +72,7 @@ const RoleManageCmp: React.FC = () => {
           tiggerSaveDic={tiggerSaveDic}
           tiggerUpdateDicStatus={tiggerUpdateDicStatus}
           tiggerDeleteDic={tiggerDeleteDic}
+          fetchQueryDicListByPage={fetchQueryDicListByPage}
         />
       </ProCard>
     </ProCard>

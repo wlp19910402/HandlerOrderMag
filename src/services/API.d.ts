@@ -27,6 +27,18 @@ export default {
   DIC_UPDATE_STATUS: '/handler/sys/dic/update/status', //修改字典的状态
   DIC_LIST_BY_PARENT_ID: '/handler/sys/dic/children', //{parentId}根据父级的id查询字典列表
   DIC_DELETE_BY_ID: '/handler/sys/dic/delete', //删除字典
+  DIC_LIST_BY_PAGE: '/handler/sys/dic/page', //字典分页查询
+
+  //网点查询
+  WEBSITE_LIST_BY_PAGE: '/handler/site/page', //分页查询
+  WEBSITE_SAVE: '/handler/site/save', //编辑或新增网点
+  WEBSITE_UPDATE_STATUS: '/handler/site/update-status', //修改网点状态
+  WEBSITE_DELETE_BY_ID: '/handler/site/area-del', //删除网点
+  WEBSITE_DETAIL_BY_ID: '/handler/site/info', //网点详情
+
+  //查询行政区域
+  GET_AREA_DATA: '/handler/area/subsets', //获取行政区域
+  USER_LIST_By_WEBSITE_ID: '/handler/site/user/page', //根据网点id查询用户列表
   // 用户管理接口
   // USER_LOGIN: '/api/sys/login',
   // USER_CURRENT: "/api/user/current",

@@ -1,9 +1,13 @@
 export type DicDataType = {
   id?: number; //字典id
   name: string; // 角色名称
-  parentId: number; // 字典父级iD
-  type: string; //字典类型
+  parentId?: number; // 字典父级iD
+  type?: string; //字典类型
   status?: number; //0启用状态，1是禁用
+};
+export type PageDataType = {
+  current: number;
+  pageSize: number;
 };
 /**
  * 品类=category
