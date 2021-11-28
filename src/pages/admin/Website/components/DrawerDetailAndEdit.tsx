@@ -30,13 +30,7 @@ const DrawerDetailAndEdit: React.FC<DrawerDetailAndEditDataProps> = (props) => {
   };
   return (
     <Tabs defaultActiveKey="1" type="card" size={'small'}>
-      <TabPane tab="签约管理" key="1" style={{ overflowY: 'auto', height: 'calc(100vh - 100px)' }}>
-        签约管理 1
-      </TabPane>
-      <TabPane tab="服务授权" key="2" style={{ overflowY: 'auto', height: 'calc(100vh - 100px)' }}>
-        服务授权 2
-      </TabPane>
-      <TabPane tab="网点信息" key="3" style={{ overflowY: 'auto', height: 'calc(100vh - 100px)' }}>
+      <TabPane tab="网点信息" key="1" style={{ overflowY: 'auto', height: 'calc(100vh - 100px)' }}>
         <Form
           {...layout}
           name="nest-messages"
@@ -92,6 +86,13 @@ const DrawerDetailAndEdit: React.FC<DrawerDetailAndEditDataProps> = (props) => {
           </Form.Item>
         </Form>
       </TabPane>
+      <TabPane tab="区域授权" key="2" style={{ overflowY: 'auto', height: 'calc(100vh - 100px)' }}>
+        区域授权 1
+      </TabPane>
+      <TabPane tab="服务授权" key="3" style={{ overflowY: 'auto', height: 'calc(100vh - 100px)' }}>
+        服务授权 2
+      </TabPane>
+
       {currentRow?.id !== undefined && (
         <TabPane
           tab="网点人员"
