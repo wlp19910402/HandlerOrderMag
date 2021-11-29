@@ -35,10 +35,11 @@ export default {
   WEBSITE_UPDATE_STATUS: '/handler/site/update-status', //修改网点状态
   WEBSITE_DELETE_BY_ID: '/handler/site/area-del', //删除网点
   WEBSITE_DETAIL_BY_ID: '/handler/site/info', //网点详情
-
+  WEBSITE_AREA_SAVE: '/handler/site/area-save',//服务区域新增
   //查询行政区域
   GET_AREA_DATA: '/handler/area/subsets', //获取行政区域
   USER_LIST_By_WEBSITE_ID: '/handler/site/user/page', //根据网点id查询用户列表
+
   // 用户管理接口
   // USER_LOGIN: '/api/sys/login',
   // USER_CURRENT: "/api/user/current",

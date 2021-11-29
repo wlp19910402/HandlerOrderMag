@@ -21,6 +21,19 @@ export type SiteSaveParams = {
   streetCommunityCode: string;
   streetCommunityName: string;
 };
+
+export type WebSiteAreaSaveParams = {
+  cityCode: string;
+  cityName: string; //城市名称
+  districtCode: string;
+  districtName: string;
+  id?: number;
+  provinceCode: string;
+  provinceName: string;
+  siteId: number;
+  streetCommunityCode: string;
+  streetCommunityName: string;
+};
 export type SiteDataType = {
   id?: number;
   address?: string; //详细地址

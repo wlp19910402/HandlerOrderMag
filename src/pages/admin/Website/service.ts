@@ -1,4 +1,4 @@
-import type { UserSearchType, EditUserDataType, WebsiteSearchType, SiteSaveParams } from './data';
+import type { UserSearchType, WebSiteAreaSaveParams, WebsiteSearchType, SiteSaveParams } from './data';
 import API from '@/services/API.d';
 import httpServer from '@/utils/httpServer';
 //网点列表
@@ -31,6 +31,13 @@ export const saveWebsite = async (params: SiteSaveParams) => {
     data: params,
   });
 };
+//服务区域保存
+export const saveWebsiteArea = async (params: WebSiteAreaSaveParams) => {
+  return httpServer.post(API.WEBSITE_AREA_SAVE, {
+    data: params,
+  });
+};
+
 //查看网点详情
 export const queryWebsiteDetailById = async (id: number) => {
   return await httpServer.get(API.WEBSITE_DETAIL_BY_ID, { params: { id } });
