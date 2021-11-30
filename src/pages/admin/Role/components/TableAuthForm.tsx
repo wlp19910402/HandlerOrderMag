@@ -22,17 +22,17 @@ export type SaveRoleParamsType = {
 };
 const TableAuthForm: React.FC<DetailListProps> = (props) => {
   const { id } = props;
-  const [permListByRoleId, setpermListByRoleId] = useState<DataNode[]>([]);
-  const [expandedKeys, setExpandedKeys] = useState<React.Key[]>([]);
-  const [checkedKeys, setCheckedKeys] = useState<number[] | []>([]);
-  const [selectedKeys, setSelectedKeys] = useState<React.Key[]>([]);
-  const [loading, setLoading] = useState<boolean | undefined>(false);
+  const [ permListByRoleId, setpermListByRoleId ] = useState<DataNode[]>([]);
+  const [ expandedKeys, setExpandedKeys ] = useState<React.Key[]>([]);
+  const [ checkedKeys, setCheckedKeys ] = useState<number[] | []>([]);
+  const [ selectedKeys, setSelectedKeys ] = useState<React.Key[]>([]);
+  const [ loading, setLoading ] = useState<boolean | undefined>(false);
   const actionRef = useRef<ActionType>();
 
   useEffect(() => {
     if (permListByRoleId.length == 0) {
       queryPermAllData().then((res) => {
-        setpermListByRoleId(treeDataFormat(res.data));
+        setpermListByRoleId(treeDataFormat(res && Array.isArray(res.data) ? res.data : []));
       });
     }
     if (!id) {
@@ -41,7 +41,7 @@ const TableAuthForm: React.FC<DetailListProps> = (props) => {
     }
     fetchPermListByRoleId();
     actionRef.current && actionRef.current.reloadAndRest?.();
-  }, [id]);
+  }, [ id ]);
 
   const treeDataFormat: any = (data: permListType[]) => {
     return data.map((item: permListType) => ({
@@ -78,55 +78,55 @@ const TableAuthForm: React.FC<DetailListProps> = (props) => {
   };
 
   return (
-    <Spin spinning={loading}>
+    <Spin spinning={ loading }>
       <PageHeader
         className="qm-role-menu-header"
         title="授权"
-        extra={[
+        extra={ [
           <Button
-            disabled={id === null}
+            disabled={ id === null }
             type="primary"
             key="1"
-            onClick={() => {
+            onClick={ () => {
               setLoading(true);
               if (id !== null)
                 RoleBindMenu({ permIds: checkedKeys, roleId: id })
                   .then(() => setLoading(false))
                   .catch(() => setLoading(false));
               else setLoading(false);
-            }}
+            } }
           >
             保存
           </Button>,
-        ]}
-        style={{ margin: 0, padding: 10 }}
+        ] }
+        style={ { margin: 0, padding: 10 } }
       >
         <div className="qm-role-table-title">菜单列表</div>
         <ProCard
           layout="default"
           ghost
-          colSpan={24}
-          style={{
+          colSpan={ 24 }
+          style={ {
             marginLeft: 0,
             marginRight: '0px',
             height: 'calc(100vh - 230px)',
             minHeight: '500px',
             marginBottom: '20px',
             overflow: 'auto',
-          }}
+          } }
           bordered
         >
           <Tree
             checkable
-            disabled={id === null}
-            expandedKeys={expandedKeys}
-            style={{ justifyContent: 'left' }}
-            treeData={permListByRoleId}
-            onCheck={onCheck}
-            onExpand={onExpand}
-            checkedKeys={checkedKeys}
-            onSelect={onSelect}
-            selectedKeys={selectedKeys}
+            disabled={ id === null }
+            expandedKeys={ expandedKeys }
+            style={ { justifyContent: 'left' } }
+            treeData={ permListByRoleId }
+            onCheck={ onCheck }
+            onExpand={ onExpand }
+            checkedKeys={ checkedKeys }
+            onSelect={ onSelect }
+            selectedKeys={ selectedKeys }
           />
         </ProCard>
       </PageHeader>

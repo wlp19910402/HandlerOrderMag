@@ -47,11 +47,6 @@
                     component: './admin/UserList',
                   },
                   {
-                    path: '/admin/menu',
-                    name: '菜单管理',
-                    component: './admin/Menu',
-                  },
-                  {
                     path: '/admin/role',
                     name: '角色管理',
                     component: './admin/Role',
@@ -82,116 +77,14 @@
                     name: '工单列表',
                     component: './workOrder/OrderList',
                   },
-                  {
-                    path: '/workOrder/addOrder/success',
-                    name: '操作成功',
-                    component: './workOrder/AddOrder/success',
-                  },
-                  {
-                    path: '/workOrder/maintain',
-                    name: '维修工单',
-                    routes: [
-                      {
-                        path: '/workOrder/maintain/',
-                        redirect: '/workOrder/maintain/list',
-                      },
-                      {
-                        path: '/workOrder/maintain/list',
-                        name: '列表',
-                        component: './workOrder/Maintain/List',
-                      },
-                      {
-                        path: '/workOrder/maintain/info/:id',
-                        name: '详情',
-                        component: './workOrder/Maintain/Info',
-                      },
-                      {
-                        path: '/workOrder/maintain/finish/:no',
-                        name: '结单',
-                        component: './workOrder/Maintain/Finish',
-                      },
-                      {
-                        path: '*',
-                        component: './404',
-                      },
-                    ],
-                  },
-                  {
-                    path: '/workOrder/patrol',
-                    name: '巡检工单',
-                    routes: [
-                      {
-                        path: '/workOrder/patrol/',
-                        redirect: '/workOrder/Patrol/list',
-                      },
-                      {
-                        path: '/workOrder/patrol/list',
-                        name: '列表',
-                        component: './workOrder/Patrol/List',
-                      },
-                      {
-                        path: '/workOrder/patrol/info/:id',
-                        name: '详情',
-                        component: './workOrder/Patrol/Info',
-                      },
-                      {
-                        path: '/workOrder/patrol/finish/:no',
-                        name: '结单',
-                        component: './workOrder/Patrol/Finish',
-                      },
-                    ],
-                  },
-                  {
-                    path: '/workOrder/install',
-                    name: '安装工单',
-                    routes: [
-                      {
-                        path: '/workOrder/install/',
-                        redirect: '/workOrder/Install/list',
-                      },
-                      {
-                        path: '/workOrder/install/list',
-                        name: '列表',
-                        component: './workOrder/Install/List',
-                      },
-                      {
-                        path: '/workOrder/install/info/:id',
-                        name: '详情',
-                        component: './workOrder/Install/Info',
-                      },
-                      {
-                        path: '/workOrder/install/finish/:no',
-                        name: '结单',
-                        component: './workOrder/Install/Finish',
-                      },
-                    ],
-                  },
+
                   {
                     path: '*',
                     component: './404',
                   },
                 ],
               },
-              {
-                path: '/monitor',
-                name: '监控管理',
-                icon: 'smile',
-                routes: [
-                  {
-                    path: '/monitor/consumable/',
-                    redirect: '/monitor/consumable/list',
-                  },
-                  {
-                    path: '/monitor/consumable/list',
-                    name: '耗材监控',
-                    component: './monitor/consumable/List/index',
-                  },
-                  {
-                    path: '*',
-                    component: './404',
-                  },
-                ],
-              },
+
               {
                 name: 'exception',
                 path: '/exception',

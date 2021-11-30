@@ -1,4 +1,4 @@
-import type { MenuDataType } from '@/pages/admin/Menu/data.d';
+import type { MenuDataType } from '@/models/menu';
 import API from '@/services/API.d'
 import httpServer from '@/utils/httpServer'
 
