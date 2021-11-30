@@ -41,7 +41,7 @@ const Model: LoginModelType = {
   },
   effects: {
     // 登录
-    *login({ payload, callback }, { call, put }) {
+    *login ({ payload, callback }, { call, put }) {
       const response = yield call(fakeAccountLogin, payload);
       if (!response) return;
       // yield put({
@@ -72,7 +72,7 @@ const Model: LoginModelType = {
       history.replace(redirect || '/welcome');
     },
     // 使用token获取用户信息
-    *fetchCurrent({ callback }, { call, put }) {
+    *fetchCurrent ({ callback }, { call, put }) {
       const response = yield call(fackAccountInfo);
       // console.log(response, 3333)
       if (!response || response.code !== 0) {
@@ -90,7 +90,7 @@ const Model: LoginModelType = {
       callback(true);
     },
     // 退出
-    *logout(_, { put, call }) {
+    *logout (_, { put, call }) {
       yield call(fackLogout);
       yield put({
         type: 'clearUser',
@@ -100,13 +100,13 @@ const Model: LoginModelType = {
     },
   },
   reducers: {
-    changeCurrentUser(state, { payload }) {
+    changeCurrentUser (state, { payload }) {
       return {
         ...state,
         currentUser: payload || {},
       };
     },
-    clearUser() {
+    clearUser () {
       return {
         currentUser: {},
       };

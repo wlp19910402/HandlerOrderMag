@@ -1,131 +1,49 @@
 export default {
-  HANDLER_ORDER_MAG: '/handler/login',
-  HANDLER_ORDER_CODE: '/handler/code/image/base64',
-  USER_CURRENT: '/handler/user/current',
-  USER_LIST: '/handler/user/list', //获取用户列表
-  MENU_CURRENT_TREE: '/handler/current/perm/list', // 当前用户菜单【用于用户登录后菜单加载】
-  USER_STATUS: '/handler/user/update/status', /// //系统用户更改状态sys/update/status/{id}
-  USER_ADD: '/handler/user/invitation', //邀请用户
-  USER_DELETE: '/handler/user/cancel/', /// user/del/{id}//删除用户
-  // ROLE_USERID_CHECKID: '/handler/sys/user/role/list', //当前用户下所有的角色列表
-  USER_LIST_BY_ROLE: '/handler/user/list-by-role', //{ roleId }根据角色id查询用户
-  PERM_LIST_BY_ROLE: '/handler/sys/perm/union-role', //{ roleId }根据角色id查询所有权限
-  GET_PERM_LIST_ALL: '/handler/sys/perm/all', //查询所有的权限列表
-  ROLE_LIST: '/handler/sys/role/list',
-  USER_BIND_ROLE_EDIT: '/handler/sys/user/role/edit',
+  HANDLER_ORDER_MAG: '/login',
+  HANDLER_ORDER_CODE: '/code/image/base64',
+  USER_CURRENT: '/user/current',
+  USER_LIST: '/user/list', //获取用户列表
+  MENU_CURRENT_TREE: '/current/perm/list', // 当前用户菜单【用于用户登录后菜单加载】
+  USER_STATUS: '/user/update/status', /// //系统用户更改状态sys/update/status/{id}
+  USER_ADD: '/user/invitation', //邀请用户
+  USER_DELETE: '/user/cancel/', /// user/del/{id}//删除用户
+  // ROLE_USERID_CHECKID: '/sys/user/role/list', //当前用户下所有的角色列表
+  USER_LIST_BY_ROLE: '/user/list-by-role', //{ roleId }根据角色id查询用户
+  PERM_LIST_BY_ROLE: '/sys/perm/union-role', //{ roleId }根据角色id查询所有权限
+  GET_PERM_LIST_ALL: '/sys/perm/all', //查询所有的权限列表
+  ROLE_LIST: '/sys/role/list',
+  USER_BIND_ROLE_EDIT: '/sys/user/role/edit',
 
-  CUR_USER_SITE_LIST: '/handler/site/user/site/list', //当前用户的网点
+  CUR_USER_SITE_LIST: '/site/user/site/list', //当前用户的网点
 
-  ROLE_EDIT: '/handler/sys/role/edit', //角色编辑
-  ROLE_CREATE: '/handler/sys/role/add', //角色创建
-  ROLE_DELETE: '/handler/sys/role/delete', //del/{id}
-  ROLE_BIND: '/handler/sys/role/bind',
+  ROLE_EDIT: '/sys/role/edit', //角色编辑
+  ROLE_CREATE: '/sys/role/add', //角色创建
+  ROLE_DELETE: '/sys/role/delete', //del/{id}
+  ROLE_BIND: '/sys/role/bind',
 
   //字典接口
-  DIC_LIST_BY_TYPE: '/handler/sys/dic/list', //{type}字典的类型
-  DIC_SAVE: '/handler/sys/dic/save', //保存字典
-  DIC_UPDATE_STATUS: '/handler/sys/dic/update/status', //修改字典的状态
-  DIC_LIST_BY_PARENT_ID: '/handler/sys/dic/children', //{parentId}根据父级的id查询字典列表
-  DIC_DELETE_BY_ID: '/handler/sys/dic/delete', //删除字典
-  DIC_LIST_BY_PAGE: '/handler/sys/dic/page', //字典分页查询
+  DIC_LIST_BY_TYPE: '/sys/dic/list', //{type}字典的类型
+  DIC_SAVE: '/sys/dic/save', //保存字典
+  DIC_UPDATE_STATUS: '/sys/dic/update/status', //修改字典的状态
+  DIC_LIST_BY_PARENT_ID: '/sys/dic/children', //{parentId}根据父级的id查询字典列表
+  DIC_DELETE_BY_ID: '/sys/dic/delete', //删除字典
+  DIC_LIST_BY_PAGE: '/sys/dic/page', //字典分页查询
 
   //网点查询
-  WEBSITE_LIST_BY_PAGE: '/handler/site/page', //分页查询
-  WEBSITE_SAVE: '/handler/site/save', //编辑或新增网点
-  WEBSITE_UPDATE_STATUS: '/handler/site/update-status', //修改网点状态
-  WEBSITE_DELETE_BY_ID: '/handler/site/area-del', //服务区域【删除】
-  WEBSITE_DETAIL_BY_ID: '/handler/site/info', //网点详情
-  WEBSITE_AREA_SAVE: '/handler/site/area-save', //服务区域新增
+  WEBSITE_LIST_BY_PAGE: '/site/page', //分页查询
+  WEBSITE_SAVE: '/site/save', //编辑或新增网点
+  WEBSITE_UPDATE_STATUS: '/site/update-status', //修改网点状态
+  WEBSITE_DELETE_BY_ID: '/site/area-del', //服务区域【删除】
+  WEBSITE_DETAIL_BY_ID: '/site/info', //网点详情
+  WEBSITE_AREA_SAVE: '/site/area-save', //服务区域新增
   //查询行政区域
-  GET_AREA_DATA: '/handler/area/subsets', //获取行政区域
-  USER_LIST_By_WEBSITE_ID: '/handler/site/user/page', //根据网点id查询用户列表
-  GET_AREA_DATA_BY_WEBSITE: '/handler/site/area-page', //网点服务区域分页列表
+  GET_AREA_DATA: '/area/subsets', //获取行政区域
+  USER_LIST_By_WEBSITE_ID: '/site/user/page', //根据网点id查询用户列表
+  GET_AREA_DATA_BY_WEBSITE: '/site/area-page', //网点服务区域分页列表
 
 
   //工单
-  ORDER_LIST_BY_PAGE: '/handler/work-order/page',//工单分页列表查询
-  // 用户管理接口
-  // USER_LOGIN: '/api/sys/login',
-  // USER_CURRENT: "/api/user/current",
+  ORDER_LIST_BY_PAGE: '/work-order/page',//工单分页列表查询
+  USER_LOGOUT: '/logout',
 
-  USER_LOGOUT: '/api/sys/logout',
-  // USER_AUTHORITY: '/api/user/authorization',
-  // USER_LIST: '/api/user/list',
-  // USER_ADD: '/api/user/add',
-
-  USER_ROLE_ID: '/api/user/role', /// user/role/{id}
-  USER_EDIT: '/api/user/edit', // 用户编辑
-  USER_NOT_BIND_WX: '/api/user/not-bind-wx', //未绑定管理员用户
-  USER_EDIT_PWD: '/api/user/edit-pwd', //修改密码
-  // 角色管理接口
-  // ROLE_USERID_CHECKID: '/api/sys/role/list', // 角色列表标记指定用户拥有的权限/sys/role/list/{userId}
-
-  ROLE_GET_MENU: '/api/sys/role/menu', // 绑定权限回显/sys/role/menu/{id}
-  ROLE_INFO: '/api/sys/role/detail', /// sys/role/detail/{id}
-  // 菜单管理接口
-  MENU_TREE: '/api/sys/menu/tree', // 当前用户菜单【用于用户登录后菜单加载】
-  MENU_SAVE: '/api/sys/menu/save', // 添加或编辑菜单
-  MENU_DELETE: '/api/sys/menu/del', /// sys/menu/del/{id}
-  // 字典管理接口
-  DICTIONARY_LIST: '/api/sys/dic/list',
-  DICTIONARY_SAVE: '/api/sys/dic/save',
-  DICTIONARY_DELETE: '/api/sys/dic/del', /// sys/dic/del/{id}
-  DICTIONARY_TYPE: '/api/sys/dic/list', /// sys/dic/list/{type}字典类型查询该字典的数据
-  DICTIONARY_PARENT_ID: '/api/sys/dic/childs', //sys/dic/childs/{parentId}//父级id查询子集的内容
-  // 上传文件的接口
-  UPLOAD_OSS_SIGN: '/api/oss/upload-sign', // 获取上传签名信息
-  UPLOAD_FILE: '/api/oss/upload-file', // 文件直传服务
-  UPLOAD_STS_SIGN: '/api/oss/sts-sign', // 获取STS签名
-  //设备管理-设备管理接口
-  DEVICE_LIST: '/api/device/list',
-  DEVICE_INFO: '/api/device/info', /// device/info/{id}
-  DEVICE_DELETE: '/api/device/del', /// device/del/{id}
-  DEVICE_SAVE: '/api/device/save',
-  // 耗材管理-设备管理接口
-  COMSUMABLE_LIST: '/api/consumable/list',
-  COMSUMABLE_INFO: '/api/consumable/info', /// consumable/info/{id}
-  COMSUMABLE_DELETE: '/api/consumable/del', /// consumable/del/{id}
-  COMSUMABLE_SAVE: '/api/consumable/save',
-  // 备件管理-设备管理接口
-  PART_LIST: '/api/part/list',
-  PART_INFO: '/api/part/info', /// part/info/{id}
-  PART_DELETE: '/api/part/del', /// part/del/{id}
-  PART_SAVE: '/api/part/save',
-  // 安装单位管理-设备档案管理接口
-  COMPANY_LIST: '/api/company/list',
-  COMPANY_INFO: '/api/company/info', /// company/info/{id}
-  COMPANY_DELETE: '/api/company/del', /// company/del/{id}
-  COMPANY_SAVE: '/api/company/save',
-  COMPANY_FIND_BY_NAME: '/api/company/find-by-name',
-  // 档案列表管理-设备档案管理接口
-  PORTFOLIO_LIST: '/api/portfolio/list', //档案列表查询
-  PORTFOLIO_SAVE: '/api/portfolio/add', //
-  PORTFOLIO_INFO: '/api/portfolio/info', /// portfolio/info/{id}
-  PORTFOLIO_DELETE: '/api/portfolio/del', /// portfolio/del/{id}
-  //档案耗材管理-设备档案管理接口
-  PORTFOLIO_ADD_CONSUMABLE: '/api/portfolio/add-consumable', //档案耗材新增
-  PORTFOLIO_LIST_CONSUMABLE: '/api/portfolio/consumable-list', ///portfolio/consumable-list/{id} 档案耗材列表
-  PORTFOLIO_DELETE_CONSUMABLE: '/api/portfolio/move-consumable', ///portfolio/move-consumable/{portfolioConsumableId} 移除档案耗材
-  PORTFOLIO_UPDATE_CONSUMABLE: '/api/portfolio/update-consumable', ///portfolio/update-consumable//修改档案耗材
-  //档案备件管理-设备档案管理接口
-  PORTFOLIO_ADD_PART: '/api/portfolio/add-part', //档案耗材新增
-  PORTFOLIO_LIST_PART: '/api/portfolio/part-list', ///portfolio/part-list/{id} 档案耗材列表
-  PORTFOLIO_DELETE_PART: '/api/portfolio/move-part', ///portfolio/move-part/{portfolioPartId} 移除档案耗材
-  PORTFOLIO_UPDATE_PART: '/api/portfolio/update-part', ///portfolio/update-part//修改档案耗材
-  //工单管理
-  WORK_ORDER_ADD: '/api/work-order/sys-add', //新增工单
-  WORK_ORDER_LIST: '/api/work-order/list', //工单列表
-  WORK_ORDER_SEND_ORDERS: '/api/work-order/send-orders', //派单
-  WORK_ORDER_BIND_PROTFOLIO: '/api/work-order/bind-portfolio', //绑定档案
-  WORK_ORDER_CANCEL: '/api/work-order/cancel', //撤单
-  WORK_ORDER_INFO: '/api//work-order/info', //详情
-  WORK_ORDER_SUBMIT: '/api/work-order/submit', //结单
-  WORK_ORDER_LOGS: '/api/work-order/logs', //工单操作日志/work-order/logs/{id}
-  //工程师管理
-  ENGINEER_LIST: '/api/wx/engineers', //工程师管理列表
-  WX_USER_LIST: '/api/wx/list', //工程师管理列表
-  WX_BIND_ADMIN: '/api/wx/bind-admin', //绑定管理员
-  // 监控管理
-  MONITOR_CONSUMABLE_LIST: '/api/monitor/consumables', //耗材监控列表
-  WORK_ORDER_QUICK_CREATE: '/api/work-order/quick-create', //快捷创建工单
 };

@@ -21,12 +21,13 @@ const codeMatch = (res: any) => {
   }
   return undefined
 }
+const reqUrl = process.env.NODE_ENV === 'development' ? '/handler' : 'http://web-server-api.dev.test.echobing.com'
 const get = async (url: string, params?: any) => {
-  const response: any = await request.get(url, params)
+  const response: any = await request.get(reqUrl + url, params)
   return codeMatch(response)
 }
 const post = async (url: string, params?: any) => {
-  const response: any = await request.post(url, params)
+  const response: any = await request.post(reqUrl + url, params)
   return codeMatch(response)
 }
 
