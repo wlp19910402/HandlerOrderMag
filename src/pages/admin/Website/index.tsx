@@ -27,7 +27,6 @@ const ResumeList: React.FC<SiteDataType> = () => {
   const [roleData, setRoleData] = useState<RoleCheckBoxDataType[] | undefined>();
   const [siteData, setSiteData] = useState<SiteCheckBoxDataType[] | undefined>();
   const [initialRoleIds, setInitialRoleIds] = useState<number[] | undefined>(undefined);
-
   const [provinceData, setProvinceData] = useState<selectLableType[]>([]);
   const [cityData, setCityData] = useState<selectLableType[]>([]);
   const [secondCity, setSecondCity] = useState<string>('');
@@ -37,7 +36,6 @@ const ResumeList: React.FC<SiteDataType> = () => {
     {
       title: '网点名称',
       dataIndex: 'siteName',
-      // hideInSearch: true,
       width: 120,
       valueType: 'textarea',
       key: 'siteName',
