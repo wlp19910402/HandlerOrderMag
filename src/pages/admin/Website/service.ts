@@ -1,4 +1,9 @@
-import type { UserSearchType, WebSiteAreaSaveParams, WebsiteSearchType, SiteSaveParams } from './data';
+import type {
+  UserSearchType,
+  WebSiteAreaSaveParams,
+  WebsiteSearchType,
+  SiteSaveParams,
+} from './data';
 import API from '@/services/API.d';
 import httpServer from '@/utils/httpServer';
 //网点列表
@@ -25,6 +30,10 @@ export const deleteWebsiteById = async (id: number) => {
 };
 export const getAreaData = async (params: any = 0) => {
   return httpServer.get(API.GET_AREA_DATA, { params: { parentCode: params } });
+};
+//网点服务区域分页列表
+export const getAreaDataByWebsite = async (params: any) => {
+  return httpServer.get(API.GET_AREA_DATA_BY_WEBSITE, { params });
 };
 export const saveWebsite = async (params: SiteSaveParams) => {
   return httpServer.post(API.WEBSITE_SAVE, {
