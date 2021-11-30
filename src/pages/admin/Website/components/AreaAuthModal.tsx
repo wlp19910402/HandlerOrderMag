@@ -27,10 +27,10 @@ const layout = {
 type selectLableType = { label: string; value: string | number };
 const WebsiteInfoEdit: React.FC<DrawerDetailAndEditDataProps> = (props) => {
   const { currentRow, actionRef, provinceData, siteId } = props;
-  const [cityData, setCityData] = useState<selectLableType[]>([]);
-  const [districtData, setDistrictData] = useState<selectLableType[]>([]);
-  const [streetCommunityData, setStreetCommunityData] = useState<selectLableType[]>([]);
-  const [nameObj, setNameObj] = useState<object>({});
+  const [ cityData, setCityData ] = useState<selectLableType[]>([]);
+  const [ districtData, setDistrictData ] = useState<selectLableType[]>([]);
+  const [ streetCommunityData, setStreetCommunityData ] = useState<selectLableType[]>([]);
+  const [ nameObj, setNameObj ] = useState<object>({});
   const onSaveWebsiteAreaInfo = async (values: any) => {
     let response = await saveWebsiteArea({ siteId, ...values, ...nameObj });
     if (!response) return;
@@ -68,8 +68,8 @@ const WebsiteInfoEdit: React.FC<DrawerDetailAndEditDataProps> = (props) => {
     },
     {
       title: '街道/社区',
-      key: 'streetCommunityName',
-      dataIndex: 'streetCommunityName',
+      key: 'streetName',
+      dataIndex: 'streetName',
     },
     {
       title: '操作',
@@ -83,9 +83,9 @@ const WebsiteInfoEdit: React.FC<DrawerDetailAndEditDataProps> = (props) => {
         <Popconfirm
           key="delete"
           title="确认删除吗?"
-          onConfirm={() => {
+          onConfirm={ () => {
             tiggerDeleteAreaByWebsiteId(record?.id);
-          }}
+          } }
         >
           <a> 删除</a>
         </Popconfirm>,
@@ -147,16 +147,16 @@ const WebsiteInfoEdit: React.FC<DrawerDetailAndEditDataProps> = (props) => {
     formRef.current!.resetFields();
   }, []);
   return (
-    <Space direction="vertical" style={{ width: '100%' }} size={20}>
-      <Alert message={'网点名称:' + currentRow?.siteName} type="info" />
+    <Space direction="vertical" style={ { width: '100%' } } size={ 20 }>
+      <Alert message={ '网点名称:' + currentRow?.siteName } type="info" />
       <Form
-        {...layout}
-        ref={formRef}
+        { ...layout }
+        ref={ formRef }
         name="nest-messages"
-        onFinish={onSaveWebsiteAreaInfo}
-        validateMessages={validateMessages}
+        onFinish={ onSaveWebsiteAreaInfo }
+        validateMessages={ validateMessages }
       >
-        <Collapse defaultActiveKey={['1']}>
+        <Collapse defaultActiveKey={ [ '1' ] }>
           <Collapse.Panel
             header="新增服务区域"
             key="1"
@@ -164,111 +164,111 @@ const WebsiteInfoEdit: React.FC<DrawerDetailAndEditDataProps> = (props) => {
               <Button
                 type="primary"
                 htmlType="submit"
-                onClick={(event) => {
+                onClick={ (event) => {
                   event.stopPropagation();
-                }}
+                } }
               >
                 新增
               </Button>
             }
           >
             <Row>
-              <Col span={12}>
+              <Col span={ 12 }>
                 <Form.Item
                   label="省份"
                   name="provinceCode"
-                  rules={[
+                  rules={ [
                     {
                       required: true,
                       message: '请请选择省份！',
                     },
-                  ]}
+                  ] }
                 >
                   <Select
-                    onChange={async (val: string, option: any) => {
+                    onChange={ async (val: string, option: any) => {
                       formRef?.current?.setFieldsValue({
                         cityCode: '',
                         districtCode: '',
-                        streetCommunityCode: '',
+                        streetCode: '',
                       });
                       setNameObj({
                         provinceName: option.label,
                         cityName: '',
                         districtName: '',
-                        streetCommunityName: '',
+                        streetName: '',
                       });
                       await fetchGetCityData(val);
-                    }}
-                    options={provinceData}
+                    } }
+                    options={ provinceData }
                     key="provinceCode"
                   />
                 </Form.Item>
               </Col>
-              <Col span={12}>
+              <Col span={ 12 }>
                 <Form.Item
                   label="城市"
                   name="cityCode"
-                  rules={[
+                  rules={ [
                     {
                       required: true,
                       message: '请选择城市！',
                     },
-                  ]}
+                  ] }
                 >
                   <Select
-                    onChange={async (val: any, option: any) => {
+                    onChange={ async (val: any, option: any) => {
                       formRef?.current?.setFieldsValue({
                         districtCode: '',
-                        streetCommunityCode: '',
+                        streetCode: '',
                       });
                       setNameObj({
                         ...nameObj,
                         cityName: option.label,
                         districtName: '',
-                        streetCommunityName: '',
+                        streetName: '',
                       });
                       await fetchGetDistrictData(val);
-                    }}
-                    options={cityData}
+                    } }
+                    options={ cityData }
                     key="label"
                   />
                 </Form.Item>
               </Col>
-              <Col span={12}>
+              <Col span={ 12 }>
                 <Form.Item
                   label="区域"
                   name="districtCode"
-                  rules={[
+                  rules={ [
                     {
                       required: true,
                       message: '请选择区域！',
                     },
-                  ]}
+                  ] }
                 >
                   <Select
-                    onChange={async (val: any, option: any) => {
+                    onChange={ async (val: any, option: any) => {
                       formRef?.current?.setFieldsValue({
-                        streetCommunityCode: '',
+                        streetCode: '',
                       });
                       setNameObj({
                         ...nameObj,
                         districtName: option.label,
-                        streetCommunityName: '',
+                        streetName: '',
                       });
                       await fetchGetStreetCommunityData(val);
-                    }}
-                    options={districtData}
+                    } }
+                    options={ districtData }
                     key="label"
                   />
                 </Form.Item>
               </Col>
-              <Col span={12}>
-                <Form.Item label="街道" name="streetCommunityCode">
+              <Col span={ 12 }>
+                <Form.Item label="街道" name="streetCode">
                   <Select
-                    onChange={(val: any, option: any) => {
-                      setNameObj({ ...nameObj, streetCommunityName: option.label });
-                    }}
-                    options={streetCommunityData}
+                    onChange={ (val: any, option: any) => {
+                      setNameObj({ ...nameObj, streetName: option.label });
+                    } }
+                    options={ streetCommunityData }
                     key="label"
                   />
                 </Form.Item>
@@ -277,38 +277,38 @@ const WebsiteInfoEdit: React.FC<DrawerDetailAndEditDataProps> = (props) => {
           </Collapse.Panel>
         </Collapse>
       </Form>
-      <Collapse defaultActiveKey={['2']}>
+      <Collapse defaultActiveKey={ [ '2' ] }>
         <Collapse.Panel
           header="区域列表"
           key="2"
           extra={
             <Button
               type="primary"
-              onClick={(event) => {
+              onClick={ (event) => {
                 actionRefCur.current && actionRefCur.current.reload();
                 event.stopPropagation();
-              }}
+              } }
             >
               刷新
             </Button>
           }
         >
           <ProTable
-            bordered={true}
+            bordered={ true }
             size="small"
-            actionRef={actionRefCur}
+            actionRef={ actionRefCur }
             rowKey="id"
-            pagination={{
+            pagination={ {
               pageSize: 10,
-            }}
-            toolBarRender={false}
-            search={false}
-            request={async (params, sorter, filter) =>
+            } }
+            toolBarRender={ false }
+            search={ false }
+            request={ async (params, sorter, filter) =>
               // console.log(sorter, filter)
               await fetchQueryUserListBySiteId({ ...params })
             }
-            columns={columns}
-            rowSelection={false}
+            columns={ columns }
+            rowSelection={ false }
           />
         </Collapse.Panel>
       </Collapse>

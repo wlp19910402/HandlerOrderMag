@@ -57,29 +57,39 @@ const localMenuList = [
         url: '/admin/website',
         code: 'sys:role',
       },
-      {
-        id: 28,
-        name: '权限管理',
-        parentId: 17,
-        seq: 1,
-        children: [],
-        icon: 'fa fa-cog',
-        type: 1,
-        url: '/perm/list',
-        code: 'sys:permission',
-      },
+      // {
+      //   id: 28,
+      //   name: '权限管理',
+      //   parentId: 17,
+      //   seq: 1,
+      //   children: [],
+      //   icon: 'fa fa-cog',
+      //   type: 1,
+      //   url: '/perm/list',
+      //   code: 'sys:permission',
+      // },
     ],
   },
   {
     id: 33,
     parentId: 0,
     name: '工单管理',
-    url: '#',
+    url: '/workorder',
     code: 'workorder:manage',
     seq: 0,
     icon: 'icon-03zibiaobiaodan',
     type: 1,
-    children: [],
+    children: [ {
+      id: 331,
+      name: '工单列表',
+      parentId: 17,
+      seq: 1,
+      children: [],
+      icon: 'fa fa-cog',
+      type: 1,
+      url: '/workorder/list',
+      code: 'sys:permission',
+    } ],
   },
 ];
 export type MenuModelState = {
@@ -140,7 +150,7 @@ const Model: MenuModelType = {
   state: defaulState,
   effects: {
     // 获取菜单列表
-    *fetchMenuTree({ callback }, { call, put }) {
+    *fetchMenuTree ({ callback }, { call, put }) {
       const response = yield call(queryMenuTree);
       if (!response) return;
       yield put({
@@ -164,23 +174,23 @@ const Model: MenuModelType = {
       if (callback) callback(menuData, flatMenuData);
     },
     // 保存菜单
-    *saveMenu({ payload, callback }, { call }) {
+    *saveMenu ({ payload, callback }, { call }) {
       const response = yield call(saveMenu, payload);
       if (!response) return;
       if (callback) callback(response);
       message.success('保存成功！');
     },
-    *delMenu({ payload, callback }, { call }) {
+    *delMenu ({ payload, callback }, { call }) {
       const response = yield call(fetchDelMenu, payload);
       if (!response) return;
       if (callback) callback(response);
       message.success('删除成功！');
     },
     // 当前用户菜单
-    *fetctCurrentMenu(_, { put, call }) {
+    *fetctCurrentMenu (_, { put, call }) {
       yield put({
         type: 'changeCurrentMenu',
-        payload: [welcome, ...localMenuList],
+        payload: [ welcome, ...localMenuList ],
       });
       // const response = yield call(queryCurrentMenu);
       // if (!response) {
@@ -196,7 +206,7 @@ const Model: MenuModelType = {
       //   payload: [welcome, ...menuData],
       // });
     },
-    *clearMenu(_, { put }) {
+    *clearMenu (_, { put }) {
       yield put({
         type: 'changeCurrentMenu',
         payload: [],
@@ -208,13 +218,13 @@ const Model: MenuModelType = {
     },
   },
   reducers: {
-    changeCurrentMenu(state = defaulState, { payload }) {
+    changeCurrentMenu (state = defaulState, { payload }) {
       return {
         ...state,
         currentMenu: payload,
       };
     },
-    changeMenuTree(state = defaulState, { payload }) {
+    changeMenuTree (state = defaulState, { payload }) {
       return {
         ...state,
         menuTree: payload,

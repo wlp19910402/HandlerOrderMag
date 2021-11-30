@@ -40,6 +40,10 @@ export default {
   GET_AREA_DATA: '/handler/area/subsets', //获取行政区域
   USER_LIST_By_WEBSITE_ID: '/handler/site/user/page', //根据网点id查询用户列表
   GET_AREA_DATA_BY_WEBSITE: '/handler/site/area-page', //网点服务区域分页列表
+
+
+  //工单
+  ORDER_LIST_BY_PAGE: '/handler/work-order/page',//工单分页列表查询
   // 用户管理接口
   // USER_LOGIN: '/api/sys/login',
   // USER_CURRENT: "/api/user/current",

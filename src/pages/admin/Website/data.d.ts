@@ -18,8 +18,8 @@ export type SiteSaveParams = {
   provinceCode: string;
   provinceName: string;
   siteName: string;
-  streetCommunityCode: string;
-  streetCommunityName: string;
+  streetCode: string;
+  streetName: string;
 };
 
 export type WebSiteAreaSaveParams = {
@@ -31,8 +31,8 @@ export type WebSiteAreaSaveParams = {
   provinceCode: string;
   provinceName: string;
   siteId: number;
-  streetCommunityCode: string;
-  streetCommunityName: string;
+  streetCode: string;
+  streetName: string;
 };
 export type SiteDataType = {
   id?: number;
@@ -48,7 +48,7 @@ export type SiteDataType = {
   siteName?: string; //网点名称
   siteNo?: string; //网点编号
   status?: number; //状态【1禁用、0=启用】
-  streetCommunityCode?: string; //街道/社区code
+  streetCode?: string; //街道/社区code
 };
 export type WebsiteSearchType = {
   orders?: SiteOrderType;

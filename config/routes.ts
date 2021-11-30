@@ -67,121 +67,25 @@
                     component: './admin/Website',
                   },
                   {
-                    path: '/admin/wxUser',
-                    name: '微信用户管理',
-                    component: './admin/WxUser',
-                  },
-                  {
-                    path: '/admin/engineer',
-                    name: '工程师管理',
-                    component: './admin/Engineer',
-                  },
-                  {
                     path: '*',
                     component: './404',
                   },
                 ],
               },
               {
-                path: '/device',
-                name: '设备管理',
-                icon: 'smile',
-                routes: [
-                  {
-                    path: '/device/list',
-                    name: '设备管理',
-                    component: './device/Device',
-                  },
-                  {
-                    path: '/device/consumable',
-                    name: '耗材管理',
-                    component: './device/Consumable',
-                  },
-                  {
-                    path: '/device/part',
-                    name: '备件管理',
-                    component: './device/Part',
-                  },
-                  {
-                    path: '*',
-                    component: './404',
-                  },
-                ],
-              },
-              {
-                path: '/archive',
-                name: '设备档案管理',
-                icon: 'smile',
-                routes: [
-                  {
-                    path: '/archive/company',
-                    name: '安装单位管理',
-                    component: './archive/Company',
-                  },
-                  {
-                    path: '/archive/portfolio',
-                    name: '设备档案管理',
-                    routes: [
-                      {
-                        path: '/archive/portfolio/',
-                        redirect: '/archive/portfolio/list',
-                      },
-                      {
-                        path: '/archive/portfolio/list',
-                        name: '设备档案管理',
-                        component: './archive/portfolio/List/index',
-                      },
-                      {
-                        path: '/archive/portfolio/create',
-                        name: '设备档案新增',
-                        component: './archive/portfolio/Create/index',
-                      },
-                      {
-                        path: '/archive/portfolio/edit/:id',
-                        name: '设备档案编辑',
-                        component: './archive/portfolio/Edit/[id]',
-                      },
-                      {
-                        path: '/archive/portfolio/info/:id',
-                        name: '详情',
-                        component: './archive/portfolio/Info/[id]',
-                      },
-                      {
-                        path: '*',
-                        component: './404',
-                      },
-                    ],
-                  },
-                  {
-                    path: '*',
-                    component: './404',
-                  },
-                ],
-              },
-              {
-                path: '/workOrder',
+                path: '/workorder',
                 name: '工单管理',
                 icon: 'smile',
                 routes: [
                   {
-                    path: '/workOrder/addOrder',
-                    name: '接单',
-                    routes: [
-                      {
-                        path: '/workOrder/addOrder/',
-                        name: '新增工单',
-                        component: './workOrder/AddOrder',
-                      },
-                      {
-                        path: '/workOrder/addOrder/success',
-                        name: '操作成功',
-                        component: './workOrder/AddOrder/success',
-                      },
-                      {
-                        path: '*',
-                        component: './404',
-                      },
-                    ],
+                    path: '/workorder/list/',
+                    name: '工单列表',
+                    component: './workOrder/OrderList',
+                  },
+                  {
+                    path: '/workOrder/addOrder/success',
+                    name: '操作成功',
+                    component: './workOrder/AddOrder/success',
                   },
                   {
                     path: '/workOrder/maintain',
@@ -205,6 +109,10 @@
                         path: '/workOrder/maintain/finish/:no',
                         name: '结单',
                         component: './workOrder/Maintain/Finish',
+                      },
+                      {
+                        path: '*',
+                        component: './404',
                       },
                     ],
                   },
