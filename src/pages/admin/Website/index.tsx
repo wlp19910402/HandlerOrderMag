@@ -1,23 +1,14 @@
-import {
-  PlusOutlined,
-  EditOutlined,
-  DeleteOutlined,
-  UserSwitchOutlined,
-  LockOutlined,
-  UserDeleteOutlined,
-} from '@ant-design/icons';
-import { Button, Drawer, message, Popconfirm, Switch, Tooltip, Tag, Select, Divider } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { Button, Drawer, message, Switch, Select } from 'antd';
 import React, { useState, useRef, useEffect } from 'react';
-import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
+import { PageContainer } from '@ant-design/pro-layout';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import type { ProDescriptionsItemProps } from '@ant-design/pro-descriptions';
-import ProDescriptions from '@ant-design/pro-descriptions';
 import DrawerDetailAndEdit from './components/DrawerDetailAndEdit';
-import { queryWebsiteList, upadateWebsiteStatus, deleteWebsiteById, getAreaData } from './service';
-import type { UserListDataType, AreaListItmeType, SiteDataType } from './data';
+import { queryWebsiteList, upadateWebsiteStatus, getAreaData } from './service';
+import type { SiteDataType } from './data';
 import ModalModifyForm from './components/ModalModifyForm';
-import { queryRoleList, queryCurUserSiteList } from '@/pages/admin/Role/service';
+import { queryCurUserSiteList } from '@/pages/admin/Role/service';
 
 export type RoleCheckBoxDataType = {
   label: string;
@@ -29,22 +20,19 @@ export type SiteCheckBoxDataType = {
 };
 export type selectLableType = { label: string; value: string | number };
 const ResumeList: React.FC<SiteDataType> = () => {
-  const [ showDetail, setShowDetail ] = useState<boolean>(false);
+  const [showDetail, setShowDetail] = useState<boolean>(false);
   const actionRef = useRef<ActionType>();
-  const [ currentRow, setCurrentRow ] = useState<SiteDataType>();
-  const [ selectedRowsState, setSelectedRows ] = useState<SiteDataType[]>([]);
-  const [ createModalVisible, handleModalVisible ] = useState<boolean>(false);
-  const [ createModalPasswordVisible, handleModalPasswordVisible ] = useState<boolean>(false);
-  const [ modalAuthifyVisible, handleModalAuthifyVisible ] = useState<boolean>(false);
-  const [ roleData, setRoleData ] = useState<RoleCheckBoxDataType[] | undefined>();
-  const [ siteData, setSiteData ] = useState<SiteCheckBoxDataType[] | undefined>();
-  const [ initialRoleIds, setInitialRoleIds ] = useState<number[] | undefined>(undefined);
+  const [currentRow, setCurrentRow] = useState<SiteDataType>();
+  const [createModalVisible, handleModalVisible] = useState<boolean>(false);
+  const [roleData, setRoleData] = useState<RoleCheckBoxDataType[] | undefined>();
+  const [siteData, setSiteData] = useState<SiteCheckBoxDataType[] | undefined>();
+  const [initialRoleIds, setInitialRoleIds] = useState<number[] | undefined>(undefined);
 
-  const [ provinceData, setProvinceData ] = useState<selectLableType[]>([]);
-  const [ cityData, setCityData ] = useState<selectLableType[]>([]);
-  const [ secondCity, setSecondCity ] = useState<string>('');
-  const [ districtData, setDistrictData ] = useState<selectLableType[]>([]);
-  const [ districtVal, setDistrictVal ] = useState<string>('');
+  const [provinceData, setProvinceData] = useState<selectLableType[]>([]);
+  const [cityData, setCityData] = useState<selectLableType[]>([]);
+  const [secondCity, setSecondCity] = useState<string>('');
+  const [districtData, setDistrictData] = useState<selectLableType[]>([]);
+  const [districtVal, setDistrictVal] = useState<string>('');
   const columns: ProColumns<any>[] = [
     {
       title: '网点名称',
@@ -57,12 +45,12 @@ const ResumeList: React.FC<SiteDataType> = () => {
       render: (val, entity) => {
         return (
           <a
-            onClick={ () => {
+            onClick={() => {
               setCurrentRow(entity);
               setShowDetail(true);
-            } }
+            }}
           >
-            { `${val}` }
+            {`${val}`}
           </a>
         );
       },
@@ -96,13 +84,13 @@ const ResumeList: React.FC<SiteDataType> = () => {
         return (
           <Select
             allowClear
-            onChange={ async (val: string) => {
+            onChange={async (val: string) => {
               await fetchGetCityData(val);
               setSecondCity('');
               setDistrictVal('');
               form.setFieldsValue({ provinceCode: val });
-            } }
-            options={ provinceData }
+            }}
+            options={provinceData}
             key="provinceCode"
           />
         );
@@ -120,14 +108,14 @@ const ResumeList: React.FC<SiteDataType> = () => {
         return (
           <Select
             allowClear
-            onChange={ async (val) => {
+            onChange={async (val) => {
               setSecondCity(val);
               setDistrictVal('');
               await fetchGetDistrictData(val);
               form.setFieldsValue({ cityCode: val });
-            } }
-            value={ secondCity }
-            options={ cityData }
+            }}
+            value={secondCity}
+            options={cityData}
             key="label"
           />
         );
@@ -144,12 +132,12 @@ const ResumeList: React.FC<SiteDataType> = () => {
         return (
           <Select
             allowClear
-            onChange={ (val) => {
+            onChange={(val) => {
               setDistrictVal(val);
               form.setFieldsValue({ districtCode: val });
-            } }
-            value={ districtVal }
-            options={ districtData }
+            }}
+            value={districtVal}
+            options={districtData}
             key="label"
           />
         );
@@ -160,7 +148,6 @@ const ResumeList: React.FC<SiteDataType> = () => {
       key: 'address',
       hideInSearch: true,
       dataIndex: 'address',
-      // className: 'qm-keep-word',
     },
     {
       title: '状态',
@@ -171,13 +158,13 @@ const ResumeList: React.FC<SiteDataType> = () => {
       render: (val, record) => {
         return (
           <Switch
-            loading={ false }
-            onClick={ async (checked: boolean, event: Event) => {
+            loading={false}
+            onClick={async (checked: boolean, event: Event) => {
               record.id !== undefined && switchWebsiteStatus(record.id, val === 0);
-            } }
+            }}
             checkedChildren="启用"
             unCheckedChildren="禁用"
-            defaultChecked={ val === 0 }
+            defaultChecked={val === 0}
           />
         );
       },
@@ -187,43 +174,15 @@ const ResumeList: React.FC<SiteDataType> = () => {
         }
         return (
           <Select
-            options={ [
+            options={[
               { value: 0, label: '启用' },
               { value: 1, label: '禁用' },
-            ] }
+            ]}
             key="label"
           />
         );
       },
     },
-    // {
-    //   title: '操作',
-    //   valueType: 'option',
-    //   key: 'option',
-    //   width: '60px',
-    //   fixed: 'right',
-    //   align: 'center',
-    //   render: (_, record) => (
-    //     <>
-    //       {/* {record.status == 0 && ( */}
-    //       {/* <a
-    //           type="link"
-    //           onClick={async () => {
-    //             // fetchWebsiteEdit(record);
-    //           }}
-    //         >
-    //           编辑
-    //         </a> */}
-    //       {/* )} */}
-    //       {/* <Divider type="vertical" /> */}
-    //       {/* {(record.status === 0 || record.status === 1) && ( */}
-    //       <a type="link" onClick={async () => tiggerDeleteWebsite(record.id)}>
-    //         删除
-    //       </a>
-    //       {/* )} */}
-    //     </>
-    //   ),
-    // },
   ];
   useEffect(() => {
     fetchGetProvinceData();
@@ -276,13 +235,6 @@ const ResumeList: React.FC<SiteDataType> = () => {
     actionRef.current && actionRef.current.reloadAndRest?.();
     message.success(`${batch ? '禁用' : '启用'}成功`);
   };
-  const tiggerDeleteWebsite = async (id: number) => {
-    const response = await deleteWebsiteById(id);
-    if (!response) return;
-    setShowDetail(false);
-    actionRef.current && actionRef.current.reloadAndRest?.();
-    message.success('删除成功');
-  };
 
   const fetchSiteListData = async () => {
     if (siteData === undefined) {
@@ -296,19 +248,7 @@ const ResumeList: React.FC<SiteDataType> = () => {
       );
     }
   };
-  // const fetchWebsiteEdit = async (record: SiteDataType) => {
-  //   setCurrentRow(record);
-  //   await fetchSiteListData();
-  //   await setInitialRoleIds([]);
-  //   handleModalVisible(true);
-  //   // record.id !== undefined &&
-  //   //   getUserRoleId(record.id?.toString()).then(async (response: any) => {
-  //   //     if (!response) return;
-  //   //     setInitialRoleIds(response.data);
-  //   //     await fetchRoleListData();
-  //   //     handleModalVisible(true);
-  //   //   });
-  // };
+
   const fetchQueryWebsiteList = async (params: any) => {
     const response = await queryWebsiteList(params);
     if (!response) return { data: [] };
@@ -316,83 +256,69 @@ const ResumeList: React.FC<SiteDataType> = () => {
     return { ...data, data: data.records };
   };
   return (
-    <PageContainer header={ { title: '' } }>
+    <PageContainer header={{ title: '' }}>
       <ProTable
-        bordered={ true }
-        scroll={ { x: 800 } }
+        bordered={true}
+        scroll={{ x: 800 }}
         size="small"
         headerTitle="查询表格"
-        actionRef={ actionRef }
+        actionRef={actionRef}
         rowKey="id"
-        pagination={ {
+        pagination={{
           pageSize: 10,
-        } }
-        onReset={ () => {
+        }}
+        onReset={() => {
           setSecondCity('');
           setDistrictVal('');
-        } }
-        toolBarRender={ () => [
+        }}
+        toolBarRender={() => [
           <Button
             type="primary"
-            onClick={ async () => {
+            onClick={async () => {
               await fetchSiteListData();
               await setInitialRoleIds([]);
               handleModalVisible(true);
               setCurrentRow(undefined);
-            } }
+            }}
           >
             <PlusOutlined />
             新增网点
           </Button>,
-        ] }
-        request={ async (params, sorter, filter) => await fetchQueryWebsiteList({ ...params }) }
-        columns={ columns }
-        // rowSelection={ {
-        //   onChange: (_, selectedRows: any) => setSelectedRows(selectedRows),
-        // } }
-        rowSelection={ false }
+        ]}
+        request={async (params, sorter, filter) => await fetchQueryWebsiteList({ ...params })}
+        columns={columns}
+        rowSelection={false}
       />
-      { createModalVisible && (
+      {createModalVisible && (
         <ModalModifyForm
-          createModalVisible={ createModalVisible }
-          handleModalVisible={ handleModalVisible }
-          actionRef={ actionRef }
-          currentRow={ currentRow }
-          roleData={ roleData }
-          siteData={ siteData }
-          initialRoleIds={ initialRoleIds }
-          setShowDetail={ setShowDetail }
-          provinceData={ provinceData }
+          createModalVisible={createModalVisible}
+          handleModalVisible={handleModalVisible}
+          actionRef={actionRef}
+          currentRow={currentRow}
+          roleData={roleData}
+          siteData={siteData}
+          initialRoleIds={initialRoleIds}
+          setShowDetail={setShowDetail}
+          provinceData={provinceData}
         />
-      ) }
+      )}
 
       <Drawer
-        width={ '70%' }
-        visible={ showDetail }
-        onClose={ () => {
+        width={'700px'}
+        visible={showDetail}
+        onClose={() => {
           setCurrentRow(undefined);
           setShowDetail(false);
-        } }
-        closable={ false }
+        }}
+        closable={false}
       >
-        { currentRow?.siteName && (
+        {currentRow?.siteName && (
           <DrawerDetailAndEdit
-            provinceData={ provinceData }
-            currentRow={ currentRow }
-            actionRef={ actionRef }
-          // column={2}
-          // bordered={true}
-          // title={currentRow?.siteName}
-          // key={currentRow?.id}
-          // request={async () => ({
-          //   data: currentRow || {},
-          // })}
-          // params={{
-          //   id: currentRow?.id,
-          // }}
-          // columns={columns as ProDescriptionsItemProps<SiteDataType>[]}
+            provinceData={provinceData}
+            currentRow={currentRow}
+            actionRef={actionRef}
           />
-        ) }
+        )}
       </Drawer>
     </PageContainer>
   );

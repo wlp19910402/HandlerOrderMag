@@ -23,17 +23,21 @@ export const upadateWebsiteStatus = async (id: number) => {
     data: { id },
   });
 };
-export const deleteWebsiteById = async (id: number) => {
+
+export const getAreaData = async (params: any = 0) => {
+  return httpServer.get(API.GET_AREA_DATA, { params: { parentCode: params } });
+};
+//网点服务区域删除区域
+export const deleteAreaByWebsiteId = async (id: number) => {
   return httpServer.post(API.WEBSITE_DELETE_BY_ID, {
     data: { id },
   });
 };
-export const getAreaData = async (params: any = 0) => {
-  return httpServer.get(API.GET_AREA_DATA, { params: { parentCode: params } });
-};
 //网点服务区域分页列表
 export const getAreaDataByWebsite = async (params: any) => {
-  return httpServer.get(API.GET_AREA_DATA_BY_WEBSITE, { params });
+  return httpServer.get(API.GET_AREA_DATA_BY_WEBSITE, {
+    params: { ...params, pageNo: params.current },
+  });
 };
 export const saveWebsite = async (params: SiteSaveParams) => {
   return httpServer.post(API.WEBSITE_SAVE, {

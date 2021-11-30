@@ -1,7 +1,7 @@
 /**
  * 邀请用户
  */
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import type { ActionType } from '@ant-design/pro-table';
 import { ModalForm, ProFormText, ProFormCheckbox } from '@ant-design/pro-form';
 import { addUser, editUser } from '../service';
@@ -30,6 +30,7 @@ const ModalModifyForm: React.FC<ModalModifyFormDataProps> = (props) => {
     initialRoleIds = undefined,
     setShowDetail,
   } = props;
+  const formRef = useRef<any | null>(null);
   const submitForm = async (value: EditUserDataType) => {
     let response;
     if (currentRow?.id !== undefined) {
@@ -43,12 +44,16 @@ const ModalModifyForm: React.FC<ModalModifyFormDataProps> = (props) => {
     message.success(`${currentRow?.id !== undefined ? '修改' : '添加'}成功`);
     handleModalVisible(false);
   };
+  useEffect(() => {
+    formRef.current.resetFields();
+  }, [createModalVisible]);
   return (
     <ModalForm
       modalProps={{
         maskClosable: false,
         okText: '邀请',
       }}
+      formRef={formRef}
       title={currentRow?.id !== undefined ? '用户编辑' : '邀请人员'}
       width="640px"
       visible={createModalVisible}

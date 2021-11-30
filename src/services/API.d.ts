@@ -33,7 +33,7 @@ export default {
   WEBSITE_LIST_BY_PAGE: '/handler/site/page', //分页查询
   WEBSITE_SAVE: '/handler/site/save', //编辑或新增网点
   WEBSITE_UPDATE_STATUS: '/handler/site/update-status', //修改网点状态
-  WEBSITE_DELETE_BY_ID: '/handler/site/area-del', //删除网点
+  WEBSITE_DELETE_BY_ID: '/handler/site/area-del', //服务区域【删除】
   WEBSITE_DETAIL_BY_ID: '/handler/site/info', //网点详情
   WEBSITE_AREA_SAVE: '/handler/site/area-save', //服务区域新增
   //查询行政区域
